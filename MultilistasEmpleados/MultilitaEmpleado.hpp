@@ -91,8 +91,31 @@ public:
      * @param empleado Puntero al empleado que se organizará en la multilista.
      * @param atributos Estructura que define los atributos utilizados para la organización.
      */
+
     void OrganizarGenerico(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, AtributosEmpleado<std::string> atributos);
-    Nodo<std::string, Cabecera<Empleado>> *ManejoNoNodoExistente();
-    void ManejoNodoExistente();
+    /**
+     * @brief Maneja la organización de un empleado cuando no existe un nodo en el árbol con el dato especificado.
+     *
+     * Esta función se encarga de organizar un empleado en la multilista cuando no existe un nodo en el árbol
+     * con el dato especificado. Crea un nuevo nodo y lo agrega al árbol y realiza las conexiones necesarias
+     * en la multilista.
+     *
+     * @param arbolCabecera Árbol que contiene las cabeceras de la multilista.
+     * @param empleado Puntero al empleado que se organizará en la multilista.
+     * @param atributos Estructura que define los atributos utilizados para la organización.
+     */
+    void ManejarNodoNoExistente(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, AtributosEmpleado<std::string> atributos);
+
+    /**
+     * @brief Maneja la organización de un empleado cuando ya existe un nodo en el árbol con el dato especificado.
+     *
+     * Esta función se encarga de organizar un empleado en la multilista cuando ya existe un nodo en el árbol
+     * con el dato especificado. Actualiza las conexiones necesarias en la multilista.
+     *
+     * @param arbolCabecera Árbol que contiene las cabeceras de la multilista.
+     * @param empleado Puntero al empleado que se organizará en la multilista.
+     * @param atributos Estructura que define los atributos utilizados para la organización.
+     */
+    void ManejarNodoExistente(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, AtributosEmpleado<std::string> atributos);
 };
 #endif

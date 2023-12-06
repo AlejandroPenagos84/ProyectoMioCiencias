@@ -33,43 +33,50 @@ void MultilistaEmpleado::OrganizarGenerico(RBTree<std::string, Cabecera<Empleado
 
     //* Si no existe un nodo con el dato especificado, eso significa que el dato no existe, por ello se agrega un nodo a un árbol
     if (arbolCabecera->findNodo(empleado->*atributos.dato) == NULL)
+        ManejarNodoNoExistente(arbolCabecera, empleado, atributos);
+    else
+        //* Ya existe un nodo en el árbol con el dato del empleado
+        ManejarNodoExistente(arbolCabecera, empleado, atributos);
+}
+
+void MultilistaEmpleado::ManejarNodoNoExistente(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, AtributosEmpleado<std::string> atributos)
+{
+    Cabecera<Empleado> cabEmpleado;
+
+    cabEmpleado.primerDato = empleado;
+    cabEmpleado.ultimoDato = NULL;
+
+    //* Establece el enlace desde el primer dato al último dato, incluso si es NULL.
+    cabEmpleado.primerDato->*atributos.punteroSig = cabEmpleado.ultimoDato;
+
+    // Crea un nuevo nodo con la cabecera ya hecha y lo agrega al árbol
+    Nodo<std::string, Cabecera<Empleado>> *nodo = arbolCabecera->createNodo(empleado->*atributos.dato, cabEmpleado);
+    arbolCabecera->Insert(arbolCabecera, nodo);
+}
+
+void MultilistaEmpleado::ManejarNodoExistente(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, AtributosEmpleado<std::string> atributos)
+{
+    // Se asigna a cabEmpleado la cabecera ya existente
+    Cabecera<Empleado> cabEmpleado = arbolCabecera->findNodo(empleado->*atributos.dato)->Valor;
+
+    // * Si el último dato que guarda la cabecera es NULL significa que solo hay un empleado agregado
+    if (cabEmpleado.ultimoDato == NULL)
     {
-        cabEmpleado.primerDato = empleado;
-        cabEmpleado.ultimoDato = NULL;
-
-        //* Establece el enlace desde el primer dato al último dato, incluso si es NULL.
+        // Se asigna el nuevo empleado como último dato
+        cabEmpleado.ultimoDato = empleado;
+        // El último dato apunta al primer dato (anterior)
+        cabEmpleado.ultimoDato->*atributos.punteroAnt = cabEmpleado.primerDato;
+        // El primer dato apunta al último dato (siguiente)
         cabEmpleado.primerDato->*atributos.punteroSig = cabEmpleado.ultimoDato;
-
-        // Crea un nuevo nodo con la cabecera ya hecha y lo agrega al árbol
-        Nodo<std::string, Cabecera<Empleado>> *nodo = arbolCabecera->createNodo(empleado->*atributos.dato, cabEmpleado);
-        arbolCabecera->Insert(arbolCabecera, nodo);
     }
     else
     {
-        //* Ya existe un nodo en el árbol con el dato del empleado
-
-        // Se asigna a cabEmpleado la cabecera ya existente
-        cabEmpleado = arbolCabecera->findNodo(empleado->*atributos.dato)->Valor;
-
-        // * Si el último dato que guarda la cabecera es NULL significa que solo hay un empleado agregado
-        if (cabEmpleado.ultimoDato == NULL)
-        {
-            // Se asigna el nuevo empleado como último dato
-            cabEmpleado.ultimoDato = empleado;
-            // El último dato apunta al primer dato (anterior)
-            cabEmpleado.ultimoDato->*atributos.punteroAnt = cabEmpleado.primerDato;
-            // El primer dato apunta al último dato (siguiente)
-            cabEmpleado.primerDato->*atributos.punteroSig = cabEmpleado.ultimoDato;
-        }
-        else
-        {
-            //* Ya hay más de dos datos en la cabecera.
-            // El último dato apunta al nuevo empleado
-            cabEmpleado.ultimoDato->*atributos.punteroSig = empleado;
-            // El nuevo empleado apunta al último dato
-            empleado->*atributos.punteroAnt = cabEmpleado.ultimoDato;
-            // El nuevo empleado pasa a ser el último dato
-            cabEmpleado.ultimoDato = empleado;
-        }
+        //* Ya hay más de dos datos en la cabecera.
+        // El último dato apunta al nuevo empleado
+        cabEmpleado.ultimoDato->*atributos.punteroSig = empleado;
+        // El nuevo empleado apunta al último dato
+        empleado->*atributos.punteroAnt = cabEmpleado.ultimoDato;
+        // El nuevo empleado pasa a ser el último dato
+        cabEmpleado.ultimoDato = empleado;
     }
 }
