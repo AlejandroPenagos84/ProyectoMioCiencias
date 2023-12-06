@@ -11,7 +11,7 @@ MultilistaEmpleado::MultilistaEmpleado()
     cabeceraActividadLaboral = new RBTree<std::string, Cabecera<Empleado>>;
 }
 
-void MultilistaEmpleado::AgregarEmpleado(Empleado empleado)
+void MultilistaEmpleado::AgregarEmpleado(Empleado &empleado)
 {
     std::string nombreCompleto = empleado.nombre + " " + empleado.apellido;                      ///< Creo un String con el nombre completo del empleado
     Nodo<std::string, Empleado *> *nodo = arbolEmpleados->createNodo(nombreCompleto, &empleado); ///< Creo un nodo para agregar en el arbol

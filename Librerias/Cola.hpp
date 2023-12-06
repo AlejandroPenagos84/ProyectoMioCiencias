@@ -1,10 +1,10 @@
 /**
- * @file COLA_H
+ * @file COLA_HPP
  * @brief Contiene la implementación de una cola utilizando una estructura de nodos enlazados.
  * @namespace Cola
  */
-#ifndef COLA_H
-#define COLA_H
+#ifndef COLA_HPP
+#define COLA_HPP
 
 #include <cstdlib>
 #include <iostream>

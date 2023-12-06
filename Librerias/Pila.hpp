@@ -1,5 +1,5 @@
-#ifndef PILA_H
-#define PILA_H
+#ifndef PILA_HPP
+#define PILA_HPP
 
 template <class T>
 class Pila

@@ -6,9 +6,9 @@
 #ifndef MULTILISTA_EMPLEADO_HPP
 #define MULTILISTA_EMPLEADO_HPP
 
-#include "../Librerias/ListaDoble.h"
+#include "../Librerias/ListaDoble.hpp"
 #include "../Estructuras/Empleado.hpp"
-#include "../Librerias/Arbol.h"
+#include "../Librerias/Arbol.hpp"
 #include "../Estructuras/Cabecera.hpp"
 
 #include <string>
@@ -79,7 +79,7 @@ public:
      *
      * @param empleado El empleado que se va a agregar.
      */
-    void AgregarEmpleado(Empleado empleado);
+    void AgregarEmpleado(Empleado &empleado);
 
     /**
      * @brief Organiza un empleado en la multilista según los atributos especificados.

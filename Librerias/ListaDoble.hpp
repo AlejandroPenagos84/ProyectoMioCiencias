@@ -1,7 +1,7 @@
-// @file COLA_H
 
-#ifndef DOUBLELINKEDLIST_H
-#define DOUBLELINKEDLIST_H
+
+#ifndef DOUBLELINKEDLIST_HPP
+#define DOUBLELINKEDLIST_HPP
 
 #include <iostream>
 #include <stdexcept>

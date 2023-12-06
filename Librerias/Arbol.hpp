@@ -1,10 +1,10 @@
-#ifndef ARBOL_H
-#define ARBOL_H
+#ifndef ARBOL_HPP
+#define ARBOL_HPP
 
 #include <iostream>
 #include <queue>
-#include "Pila.h"
-#include "Cola.h"
+#include "Pila.hpp"
+#include "Cola.hpp"
 
 using namespace Cola;
 
