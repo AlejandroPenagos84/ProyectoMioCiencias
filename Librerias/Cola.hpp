@@ -163,19 +163,23 @@ namespace Cola
     T Queue<T>::Front(char opt)
     {
         Node<T> *temp;
+        T data;
         switch (opt)
         {
         case 'I':
             temp = header->next; ///< Temp apunta al nodo siguiente al header
-            return temp->data;
+            data = temp->data;
             break;
 
         case 'D':
             temp = z->previous; ///< Temp apunta al nodo anterior a z
-            return temp->data;
+            data = temp->data;
+            break;
+
         default:
             break;
         }
+        return data;
     }
 }
 #endif

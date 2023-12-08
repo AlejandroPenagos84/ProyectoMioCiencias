@@ -208,7 +208,7 @@ namespace Arbol
     Nodo<T, S> *RBTree<T, S>::findNodo(T Data)
     {
         Nodo<T, S> *temp = root;
-        while (temp != NULL && Data != temp->Clave)
+        while (temp != getNullNode() && Data != temp->Clave)
         {
             if (Data < temp->Clave)
             {

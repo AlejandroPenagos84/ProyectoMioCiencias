@@ -13,13 +13,32 @@ using namespace Cola;
 using namespace Arbol;
 int main()
 {
-
-    DoubleLinkedList<int> numeros;
-
-    std::cout << numeros.Size();
-
     ControlDao controlDao;
+    MultilistaEmpleado multilista;
     controlDao.LeerEmpleadoDAO("C:\\Users\\Alejandro Penagos\\Desktop\\ProyectosCiencias\\ProyectoMio\\Archivos\\Empleados.csv");
 
     Queue<Nodo<std::string, Empleado> *> cola = controlDao.getArbol()->inorden();
+    while (!cola.IsEmpty())
+    {
+        multilista.AgregarEmpleado(cola.Dequeue('I')->Valor);
+    }
+
+    Nodo<std::string, Cabecera<Empleado>> *n = multilista.getCabeceraCiudadNacimiento()->findNodo("New York");
+
+    Empleado *aux = n->Valor.primerDato;
+
+    while (aux != NULL)
+    {
+        PRINTLN(aux->nombre);
+        PRINTLN(aux->ciudadNacimiento);
+        aux = aux->sigCiudadNacimiento;
+    }
+
+    /*
+    std::cout << cola.Dequeue('D')->Clave << std::endl;
+    std::cout << cola.Dequeue('D')->Clave << std::endl;
+    std::cout << cola.Dequeue('D')->Clave << std::endl;
+    std::cout << cola.Dequeue('D')->Clave << std::endl;
+    std::cout << cola.Dequeue('D')->Clave << std::endl;
+    */
 }

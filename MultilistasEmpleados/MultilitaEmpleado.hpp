@@ -116,5 +116,7 @@ public:
      * @param atributos Estructura que define los atributos utilizados para la organización.
      */
     void ManejarNodoExistente(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, AtributosEmpleado<std::string> atributos);
+
+    RBTree<std::string, Cabecera<Empleado>> *getCabeceraCiudadNacimiento();
 };
 #endif
