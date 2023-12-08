@@ -9,6 +9,7 @@
                 "-g",
                 "${fileDirname}\\**.cpp",
                 "${fileDirname}\\MultilistasEmpleados\\**.cpp",
+                "${fileDirname}\\ControlDAO\\**.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

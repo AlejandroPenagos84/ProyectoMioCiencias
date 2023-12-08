@@ -47,8 +47,7 @@ private:
     DoubleLinkedList<Empleado> empleados;
 
     // Árbol que guardará la dirección de los empleados para facilitar la búsqueda y organización.
-    RBTree<std::string, Empleado *> *arbolEmpleados = new RBTree<std::string, Empleado *>();
-
+    RBTree<std::string, Empleado> *arbolEmpleados;
     // Árboles de Cabeceras
     // Los árboles almacenan datos de estructuras genéricas.
 

@@ -27,7 +27,7 @@ struct Empleado
     std::string nombreSucursal;
     int edad;
 
-    // Punteros
+    // Punteros Especificos
     // Sexo
     Empleado *antSexo;
     Empleado *sigSexo;

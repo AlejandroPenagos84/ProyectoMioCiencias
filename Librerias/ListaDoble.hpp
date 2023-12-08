@@ -143,6 +143,8 @@ namespace ListaDoble
 		z->previous = newNode; ///< z ahora apunta al nuevo nodo como último nodo.
 
 		newNode->next = z; ///< El nuevo nodo apunta a z como siguiente nodo.
+
+		size++;
 	}
 
 	template <class T>

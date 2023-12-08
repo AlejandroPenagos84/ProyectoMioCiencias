@@ -112,6 +112,7 @@ namespace Cola
             newNode->previous = header;        ///< Nuevo nodo apunta al header como anterior
             auxiliaryNode->previous = newNode; ///< Nodo anterior apunta al nuevo nodo como anterior
             newNode->next = auxiliaryNode;     ///< Nuevo nodo apunta al nodo anterior como siguiente
+            break;
         default:
             break;
         }

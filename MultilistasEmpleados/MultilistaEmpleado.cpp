@@ -3,7 +3,7 @@
 MultilistaEmpleado::MultilistaEmpleado()
 {
     // Inicialización de todos los arboles
-    arbolEmpleados = new RBTree<std::string, Empleado *>;
+    arbolEmpleados = new RBTree<std::string, Empleado>;
     cabeceraCiudadNacimiento = new RBTree<std::string, Cabecera<Empleado>>;
     cabeceraPaisNacimiento = new RBTree<std::string, Cabecera<Empleado>>;
     cabeceraCiudadResidencia = new RBTree<std::string, Cabecera<Empleado>>;
@@ -13,9 +13,9 @@ MultilistaEmpleado::MultilistaEmpleado()
 
 void MultilistaEmpleado::AgregarEmpleado(Empleado &empleado)
 {
-    std::string nombreCompleto = empleado.nombre + " " + empleado.apellido;                      ///< Creo un String con el nombre completo del empleado
-    Nodo<std::string, Empleado *> *nodo = arbolEmpleados->createNodo(nombreCompleto, &empleado); ///< Creo un nodo para agregar en el arbol
-    arbolEmpleados->Insert(arbolEmpleados, nodo);                                                ///< Agrego el nodo al arbol que tiene las direcciones de los empleados
+    std::string nombreCompleto = empleado.nombre + " " + empleado.apellido;                   ///< Creo un String con el nombre completo del empleado
+    Nodo<std::string, Empleado> *nodo = arbolEmpleados->createNodo(nombreCompleto, empleado); ///< Creo un nodo para agregar en el arbol
+    arbolEmpleados->Insert(arbolEmpleados, nodo);                                             ///< Agrego el nodo al arbol que tiene las direcciones de los empleados
 
     // Organizar según Ciudad De Nacmiento
     AtributosEmpleado<std::string> atrCiudadNacimiento;
