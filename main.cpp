@@ -23,22 +23,14 @@ int main()
         multilista.AgregarEmpleado(cola.Dequeue('I')->Valor);
     }
 
-    Nodo<std::string, Cabecera<Empleado>> *n = multilista.getCabeceraCiudadNacimiento()->findNodo("New York");
+    Nodo<std::string, Cabecera<Empleado>> *n = multilista.getCabeceraPaisNacimiento()->findNodo("USA");
 
     Empleado *aux = n->Valor.primerDato;
 
     while (aux != NULL)
     {
         PRINTLN(aux->nombre);
-        PRINTLN(aux->ciudadNacimiento);
-        aux = aux->sigCiudadNacimiento;
+        PRINTLN(aux->paisNacimiento);
+        aux = aux->sigPaisNacimiento;
     }
-
-    /*
-    std::cout << cola.Dequeue('D')->Clave << std::endl;
-    std::cout << cola.Dequeue('D')->Clave << std::endl;
-    std::cout << cola.Dequeue('D')->Clave << std::endl;
-    std::cout << cola.Dequeue('D')->Clave << std::endl;
-    std::cout << cola.Dequeue('D')->Clave << std::endl;
-    */
 }

@@ -117,6 +117,23 @@ public:
      */
     void ManejarNodoExistente(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, AtributosEmpleado<std::string> atributos);
 
+    /**
+     * @brief Configura y devuelve un objeto AtributosEmpleado para simplificar la organización de empleados.
+     *
+     * Esta función configura un objeto AtributosEmpleado con los punteros y atributos necesarios
+     * para organizar empleados según un criterio específico, como ciudad de nacimiento, país, etc.
+     *
+     * @param atributo Puntero a miembro de tipo std::string en la clase Empleado que representa el criterio de organización.
+     * @param punteroAnt Puntero a miembro de tipo Empleado* en la clase Empleado que representa el enlace al elemento anterior.
+     * @param punteroSig Puntero a miembro de tipo Empleado* en la clase Empleado que representa el enlace al siguiente elemento.
+     * @return Objeto AtributosEmpleado configurado.
+     */
+    AtributosEmpleado<std::string> ConfigurarAtributosEmpleados(std::string Empleado::*atributo, Empleado *Empleado::*punteroAnt, Empleado *Empleado::*punteroSig);
+
     RBTree<std::string, Cabecera<Empleado>> *getCabeceraCiudadNacimiento();
+    RBTree<std::string, Cabecera<Empleado>> *getCabeceraPaisNacimiento();
+    RBTree<std::string, Cabecera<Empleado>> *getCabeceraCiudadResidencia();
+    RBTree<std::string, Cabecera<Empleado>> *getCabeceraPaisResidencia();
+    RBTree<std::string, Cabecera<Empleado>> *getCabeceraActividadLaboral();
 };
 #endif
