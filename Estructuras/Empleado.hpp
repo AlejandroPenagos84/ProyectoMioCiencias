@@ -5,6 +5,7 @@
 struct Empleado
 {
     // Atributos Del Empleado
+    int id;
     std::string nombre;
     std::string apellido;
     std::string tipoIdentificacion;

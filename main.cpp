@@ -2,7 +2,10 @@
 #include "Librerias/Arbol.hpp"
 #include "MultilistasEmpleados/MultilitaEmpleado.hpp"
 #include "Librerias/ListaDoble.hpp"
-#include "ControlDAO/ControlDao.hpp"
+
+#include "ControlDAO/ControlDaoEmpleado.hpp"
+#include "Vista/Formulario.hpp"
+#include "Vista/FormularioEmpleado.hpp"
 
 #define for(i, n) for (int i = 0; i < n; ++i)
 #define PRINT(x) std::cout << x
@@ -13,11 +16,12 @@ using namespace Cola;
 using namespace Arbol;
 int main()
 {
-    ControlDao controlDao;
-    MultilistaEmpleado multilista;
-    controlDao.LeerEmpleadoDAO("C:\\Users\\Alejandro Penagos\\Desktop\\ProyectosCiencias\\ProyectoMio\\Archivos\\Empleados.csv");
+    ControlDao<Empleado> *controlDao = new ControlDaoEmpleado;
 
-    Queue<Nodo<std::string, Empleado> *> cola = controlDao.getArbol()->inorden();
+    MultilistaEmpleado multilista;
+    controlDao->LeerDAO("C:\\Users\\Alejandro Penagos\\Desktop\\ProyectosCiencias\\ProyectoMio\\Archivos\\Empleados.csv");
+
+    Queue<Nodo<std::string, Empleado> *> cola = controlDao->getArbol()->inorden();
     while (!cola.IsEmpty())
     {
         multilista.AgregarEmpleado(cola.Dequeue('I')->Valor);
@@ -33,4 +37,7 @@ int main()
         PRINTLN(aux->paisNacimiento);
         aux = aux->sigPaisNacimiento;
     }
+
+    Formulario<Empleado> *formularioEmpleados = new FormularioEmpleado;
+    formularioEmpleados->SolicitarDatos();
 }
