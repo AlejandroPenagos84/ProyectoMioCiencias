@@ -49,6 +49,7 @@ namespace ListaDoble
 		 */
 		int Size();
 
+		void AddFirst(T data);
 		/**
 		 * @brief Añade un elemento al final de la lista.
 		 * @param data Datos a añadir.
@@ -129,6 +130,18 @@ namespace ListaDoble
 		size = 0;
 	}
 
+	template <class T>
+	void DoubleLinkedList<T>::AddFirst(T Data)
+	{
+		Node<T> *newNode = new Node<T>; ///< Se inicializa un nuevo nodo con el nuevo dato.
+		newNode->data = Data;
+
+		newNode->next = header->next;
+		newNode->previous = header;
+
+		header->next->previous = newNode;
+		header->next = newNode;
+	}
 	template <class T>
 	void DoubleLinkedList<T>::AddLast(T Data)
 	{

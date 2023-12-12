@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <vector>
 using namespace Arbol;
 using namespace ListaDoble;
 

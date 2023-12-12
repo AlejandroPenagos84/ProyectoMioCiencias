@@ -4,15 +4,16 @@ ControlDaoEmpleado::ControlDaoEmpleado()
 {
     arbolEmpleados = new RBTree<std::string, Empleado>();
 }
-
-// Función para leer empleados desde un archivo CSV
 void ControlDaoEmpleado::LeerDAO(const std::string &filename)
 {
     std::fstream file;
 
     file.open(filename, std::ios::in);
 
-    std::string lineaEmpleado; ///< Obtiene toda una linea con todos los datos de un empleado
+    if (!file.is_open())
+        std::cerr << "Error al abrir el archivo." << std::endl;
+
+    std::string lineaEmpleado;
 
     // Leer la primera línea y descartarla
     std::getline(file, lineaEmpleado);
@@ -20,7 +21,7 @@ void ControlDaoEmpleado::LeerDAO(const std::string &filename)
     // Leer el archivo linea por linea
     while (std::getline(file, lineaEmpleado))
     {
-        std::stringstream ss(lineaEmpleado); ///< Se utiliará para manipular los caracteres, es decir para poder separar la linea cuando encuentre una coma
+        std::stringstream ss(lineaEmpleado);
 
         DoubleLinkedList<std::string> columnas; ///< Creo una lista que guardará cada dato de cada empleado
         std::string columna;
@@ -28,8 +29,7 @@ void ControlDaoEmpleado::LeerDAO(const std::string &filename)
         while (std::getline(ss, columna, ','))
             columnas.AddLast(columna);
 
-        Empleado nuevoEmpleado; ///< Creo un empleado
-        // Le asigno los datos del archivo al empleado
+        Empleado nuevoEmpleado;
 
         if (columnas.Size() >= 21)
         {
@@ -65,6 +65,56 @@ void ControlDaoEmpleado::LeerDAO(const std::string &filename)
     }
 
     file.close();
+}
+
+void ControlDaoEmpleado::AgregarDAO(const std::string &filename, Empleado Empleado)
+{
+    std::ofstream archivo;
+
+    archivo.open(filename, std::ios::app);
+
+    if (!archivo.is_open())
+        std::cerr << "Error al abrir el archivo." << std::endl;
+
+    archivo << Empleado.id << ',' << Empleado.nombre << ',' << Empleado.apellido << ',';
+
+    archivo.close();
+}
+
+int obtenerUltimoID(const std::string &ruta_al_archivo)
+{
+    std::ifstream archivo(ruta_al_archivo);
+
+    if (!archivo.is_open())
+    {
+        std::cerr << "Error al abrir el archivo." << std::endl;
+        return -1; // Valor de error
+    }
+
+    std::string ultimaLinea;
+    std::string lineaActual;
+
+    // Leer el archivo línea por línea
+    while (std::getline(archivo, lineaActual))
+    {
+        ultimaLinea = lineaActual;
+    }
+
+    archivo.close(); // Cerrar el archivo después de leer
+
+    // Ahora, 'ultimaLinea' contiene el contenido de la última línea
+    std::istringstream iss(ultimaLinea);
+    int ultimoID;
+
+    if (iss >> ultimoID)
+    {
+        return ultimoID;
+    }
+    else
+    {
+        std::cerr << "Error al convertir el ID a entero." << std::endl;
+        return -1; // Valor de error
+    }
 }
 
 RBTree<std::string, Empleado> *ControlDaoEmpleado::getArbol()

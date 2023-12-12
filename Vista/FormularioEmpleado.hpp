@@ -8,11 +8,10 @@
 #include <limits>
 #include <algorithm>
 
-#define PRINTLN(x) std::cout << x << std::endl
+#define PRINTLN(x) std::cout << x << "\n"
 #define PRINT(x) std::cout << x
-#define mensajeErrorLetras "Error : Solo se pueden ingresar letras."
-#define mensajeErrorNumeros "Error : Solo se pueden ingresar número"
-
+const std::string mensajeErrorLetras = "Error : Solo se pueden ingresar letras.";
+const std::string mensajeErrorNumeros = "Error : Solo se pueden ingresar número";
 class FormularioEmpleado : public Formulario<Empleado>
 {
 public:
