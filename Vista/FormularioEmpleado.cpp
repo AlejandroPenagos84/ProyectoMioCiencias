@@ -51,6 +51,12 @@ void FormularioEmpleado::SolicitarTelefono(std::string mensajeAtributo, Empleado
 
 Empleado FormularioEmpleado::SolicitarDatos()
 {
+    Empleado e;
+    return e;
+}
+/*
+Empleado FormularioEmpleado::SolicitarDatos()
+{
     Empleado empleado;
 
     try
@@ -182,4 +188,4 @@ Empleado FormularioEmpleado::SolicitarDatos()
         std::cerr << "Error desconocido durante la captura de informaci�n del empleado." << std::endl;
         return Empleado();
     }
-}
+}*/

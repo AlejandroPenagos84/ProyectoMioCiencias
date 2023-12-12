@@ -33,29 +33,29 @@ void ControlDaoEmpleado::LeerDAO(const std::string &filename)
 
         if (columnas.Size() >= 21)
         {
-            nuevoEmpleado.id = std::stoi(columnas.getData(1));
-            nuevoEmpleado.nombre = columnas.getData(2);
-            nuevoEmpleado.apellido = columnas.getData(3);
-            nuevoEmpleado.tipoIdentificacion = columnas.getData(4);
-            nuevoEmpleado.numIdentificacion = columnas.getData(5);
-            nuevoEmpleado.sexo = sexoToBool(columnas.getData(6));
-            nuevoEmpleado.telefonoCelular = columnas.getData(7);
-            nuevoEmpleado.telefonoFijo = columnas.getData(8);
-            nuevoEmpleado.email = columnas.getData(9);
-            nuevoEmpleado.fechaNacimiento = columnas.getData(10);
-            nuevoEmpleado.ciudadNacimiento = columnas.getData(11);
-            nuevoEmpleado.paisNacimiento = columnas.getData(12);
-            nuevoEmpleado.paisResidencia = columnas.getData(13);
-            nuevoEmpleado.ciudadResidencia = columnas.getData(14);
-            nuevoEmpleado.direccion = columnas.getData(15);
-            nuevoEmpleado.barrio = columnas.getData(16);
-            nuevoEmpleado.actividadLaboral = columnas.getData(17);
-            nuevoEmpleado.tieneHijos = tieneHijosToBool(columnas.getData(18));
-            nuevoEmpleado.numHijos = std::stoi(columnas.getData(19));
-            nuevoEmpleado.nombreSucursal = columnas.getData(20);
-            nuevoEmpleado.edad = std::stoi(columnas.getData(21));
+            nuevoEmpleado.setId(std::stoi(columnas.getData(1)));
+            nuevoEmpleado.setNombre(columnas.getData(2));
+            nuevoEmpleado.setApellido(columnas.getData(3));
+            nuevoEmpleado.setTipoIdentificacion(columnas.getData(4));
+            nuevoEmpleado.setNumIdentificacion(columnas.getData(5));
+            nuevoEmpleado.setSexo(sexoToBool(columnas.getData(6)));
+            nuevoEmpleado.setTelefonoCelular(columnas.getData(7));
+            nuevoEmpleado.setTelefonoFijo(columnas.getData(8));
+            nuevoEmpleado.setEmail(columnas.getData(9));
+            nuevoEmpleado.setFechaNacimiento(columnas.getData(10));
+            nuevoEmpleado.setCiudadNacimiento(columnas.getData(11));
+            nuevoEmpleado.setPaisNacimiento(columnas.getData(12));
+            nuevoEmpleado.setPaisResidencia(columnas.getData(13));
+            nuevoEmpleado.setCiudadResidencia(columnas.getData(14));
+            nuevoEmpleado.setDireccion(columnas.getData(15));
+            nuevoEmpleado.setBarrio(columnas.getData(16));
+            nuevoEmpleado.setActividadLaboral(columnas.getData(17));
+            nuevoEmpleado.setTieneHijos(tieneHijosToBool(columnas.getData(18)));
+            nuevoEmpleado.setNumHijos(std::stoi(columnas.getData(19)));
+            nuevoEmpleado.setNombreSucursal(columnas.getData(20));
+            nuevoEmpleado.setEdad(std::stoi(columnas.getData(21)));
         }
-        std::string nombreCompletoEmpleado = nuevoEmpleado.nombre + " " + nuevoEmpleado.apellido;
+        std::string nombreCompletoEmpleado = nuevoEmpleado.getNombre() + " " + nuevoEmpleado.getApellido();
 
         // Creo un nodo que será el que se agregará al arbol
         Nodo<std::string, Empleado> *nodoEmpleado = arbolEmpleados->createNodo(nombreCompletoEmpleado, nuevoEmpleado);
@@ -69,16 +69,6 @@ void ControlDaoEmpleado::LeerDAO(const std::string &filename)
 
 void ControlDaoEmpleado::AgregarDAO(const std::string &filename, Empleado Empleado)
 {
-    std::ofstream archivo;
-
-    archivo.open(filename, std::ios::app);
-
-    if (!archivo.is_open())
-        std::cerr << "Error al abrir el archivo." << std::endl;
-
-    archivo << Empleado.id << ',' << Empleado.nombre << ',' << Empleado.apellido << ',';
-
-    archivo.close();
 }
 
 int obtenerUltimoID(const std::string &ruta_al_archivo)
@@ -132,6 +122,5 @@ bool ControlDaoEmpleado::sexoToBool(std::string sexo)
     return sexo == "Masculino" ? true : false;
 }
 
-void ControlDaoEmpleado::AgregarDAO(const std::string &filename, Empleado Empleado) {}
 void ControlDaoEmpleado::EliminarDAO(const std::string &filename, Empleado Empleado) {}
 void ControlDaoEmpleado::ModificarDAO(const std::string &filename, Empleado Empleado) {}

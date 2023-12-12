@@ -8,7 +8,7 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${fileDirname}\\**.cpp",
-                "${fileDirname}\\MultilistasEmpleados\\**.cpp",
+                "${fileDirname}\\Multilistas\\MultilistaEmpleados\\**.cpp",
                 "${fileDirname}\\ControlDAO\\**.cpp",
                 "${fileDirname}\\Vista\\**.cpp",
                 "-o",

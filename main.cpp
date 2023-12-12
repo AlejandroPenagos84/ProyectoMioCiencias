@@ -1,15 +1,16 @@
 #include <iostream>
 #include "Librerias/Arbol.hpp"
-#include "MultilistasEmpleados/MultilitaEmpleado.hpp"
+#include "Multilistas/Multilista.hpp"
+#include "Multilistas/MultilistaEmpleados/MultilitaEmpleado.hpp"
+#include "Estructuras/Cabecera.hpp"
+
 #include "Librerias/ListaDoble.hpp"
 
 #include "ControlDAO/ControlDaoEmpleado.hpp"
-#include "Vista/Formulario.hpp"
-#include "Vista/FormularioEmpleado.hpp"
 
 #define for(i, n) for (int i = 0; i < n; ++i)
 #define PRINT(x) std::cout << x
-#define PRINTLN(x) std::cout << x << std::endl
+#define PRINTLN(x) std::cout << x << "\n"
 
 using namespace ListaDoble;
 using namespace Cola;
@@ -18,26 +19,25 @@ int main()
 {
     ControlDao<Empleado> *controlDao = new ControlDaoEmpleado;
 
-    MultilistaEmpleado multilista;
+    Multilista<Empleado> *MultilistaEmpleados = new MultilistaEmpleado;
     controlDao->LeerDAO("C:\\Users\\Alejandro Penagos\\Desktop\\ProyectosCiencias\\ProyectoMio\\Archivos\\Empleados.csv");
 
     Queue<Nodo<std::string, Empleado> *> cola = controlDao->getArbol()->inorden();
     while (!cola.IsEmpty())
+        MultilistaEmpleados->Agregar(cola.Dequeue('I')->Valor);
+
+    if (auto *multilistaEmpleado = dynamic_cast<MultilistaEmpleado *>(MultilistaEmpleados))
     {
-        multilista.AgregarEmpleado(cola.Dequeue('I')->Valor);
+        // Solo si el casting es exitoso, puedes acceder a los métodos específicos de MultilistaEmpleado
+        Nodo<std::string, Cabecera<Empleado>> *n = multilistaEmpleado->getCabeceraCiudadNacimiento()->findNodo("New York");
+
+        Empleado *aux = n->Valor.primerDato;
+
+        while (aux != NULL)
+        {
+            PRINTLN(aux->getNombre());
+            PRINTLN(aux->getPaisNacimiento());
+            aux = aux->getSigCiudadNacimiento();
+        }
     }
-
-    Nodo<std::string, Cabecera<Empleado>> *n = multilista.getCabeceraPaisNacimiento()->findNodo("USA");
-
-    Empleado *aux = n->Valor.primerDato;
-
-    while (aux != NULL)
-    {
-        PRINTLN(aux->nombre);
-        PRINTLN(aux->paisNacimiento);
-        aux = aux->sigPaisNacimiento;
-    }
-
-    Formulario<Empleado> *formularioEmpleados = new FormularioEmpleado;
-    formularioEmpleados->SolicitarDatos();
 }
