@@ -4,6 +4,7 @@ ControlDaoEmpleado::ControlDaoEmpleado()
 {
     arbolEmpleados = new RBTree<std::string, Empleado>();
 }
+
 void ControlDaoEmpleado::LeerDAO(const std::string &filename)
 {
     std::fstream file;

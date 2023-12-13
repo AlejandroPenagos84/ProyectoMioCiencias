@@ -1,10 +1,12 @@
 #ifndef FORMULARIO_HPP
 #define FORMULARIO_HPP
+#include "../Librerias/ListaDoble.hpp"
+#include <string>
 
-template <class T>
+using namespace ListaDoble;
 class Formulario
 {
 public:
-    virtual T SolicitarDatos() = 0;
+    virtual DoubleLinkedList<std::string> SolicitarDatos() = 0;
 };
 #endif

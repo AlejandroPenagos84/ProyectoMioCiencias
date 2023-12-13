@@ -12,13 +12,12 @@
 #define PRINT(x) std::cout << x
 const std::string mensajeErrorLetras = "Error : Solo se pueden ingresar letras.";
 const std::string mensajeErrorNumeros = "Error : Solo se pueden ingresar número";
-class FormularioEmpleado : public Formulario<Empleado>
+class FormularioEmpleado : public Formulario
 {
 public:
-    FormularioEmpleado();
-    Empleado SolicitarDatos() override;
-    void SolicitarInformacionAlpha(std::string mensajeAtributo, Empleado &empleado, std::string Empleado::*atributo);
-    void SolicitarInformacionNum(std::string mensajeAtributo, Empleado &empleado, std::string Empleado::*atributo);
-    void SolicitarTelefono(std::string mensajeAtributo, Empleado &empleado, std::string Empleado::*atributo);
+    DoubleLinkedList<std::string> SolicitarDatos() override;
+    void SolicitarInformacionAlpha(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados);
+    void SolicitarInformacionNum(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados);
+    void SolicitarTelefono(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados);
 };
 #endif

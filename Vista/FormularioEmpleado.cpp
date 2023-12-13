@@ -1,70 +1,15 @@
 #include "FormularioEmpleado.hpp"
 
-FormularioEmpleado::FormularioEmpleado() {}
-void FormularioEmpleado::SolicitarInformacionAlpha(std::string mensajeAtributo, Empleado &empleado, std::string Empleado::*atributo)
-{
-    do
-    {
-        PRINT(mensajeAtributo);
-        std::getline(std::cin, empleado.*atributo);
-        if (!std::all_of((empleado.*atributo).begin(), (empleado.*atributo).end(), ::isalpha))
-            std::cerr << mensajeErrorLetras << std::endl;
-    } while (!std::all_of((empleado.*atributo).begin(), (empleado.*atributo).end(), ::isalpha));
-}
-
-void FormularioEmpleado::SolicitarInformacionNum(std::string mensajeAtributo, Empleado &empleado, std::string Empleado::*atributo)
-{
-    do
-    {
-        std::cout << mensajeAtributo;
-        std::getline(std::cin, empleado.*atributo);
-        if (!std::all_of((empleado.*atributo).begin(), (empleado.*atributo).end(), ::isdigit))
-            std::cerr << mensajeErrorNumeros << std::endl;
-    } while (!std::all_of((empleado.*atributo).begin(), (empleado.*atributo).end(), ::isdigit));
-}
-
-void FormularioEmpleado::SolicitarTelefono(std::string mensajeAtributo, Empleado &empleado, std::string Empleado::*atributo)
-{
-    do
-    {
-        std::cout << mensajeAtributo;
-        std::cin >> empleado.*atributo;
-
-        // Verificar si la entrada es un n�mero
-        if (std::cin.fail() || !std::all_of((empleado.*atributo).begin(), (empleado.*atributo).end(), ::isdigit))
-        {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cerr << "Error: El tel�fono debe ser un n�mero v�lido." << std::endl;
-        }
-        else if ((empleado.*atributo).length() != 10)
-        {
-            // Verificar la longitud del n�mero (ajusta seg�n sea necesario)
-            std::cerr << "Error: El tel�fono debe tener 10 d�gitos." << std::endl;
-        }
-        else
-        {
-            break; // Salir del bucle si la entrada es v�lida
-        }
-    } while (true);
-}
-
-Empleado FormularioEmpleado::SolicitarDatos()
-{
-    Empleado e;
-    return e;
-}
-/*
-Empleado FormularioEmpleado::SolicitarDatos()
+DoubleLinkedList<std::string> FormularioEmpleado::SolicitarDatos()
 {
     Empleado empleado;
-
+    DoubleLinkedList<std::string> atributosEmpleado;
     try
     {
-        SolicitarInformacionAlpha("Nombre: ", empleado, &Empleado ::nombre);
-        SolicitarInformacionAlpha("Apellido: ", empleado, &Empleado ::apellido);
-        SolicitarInformacionAlpha("Tipo de identificaci�n (C�dula de ciudadan�a, c�dula de extranjer�a o tarjeta de identidad): ", empleado, &Empleado::tipoIdentificacion);
-        SolicitarInformacionNum("Numero identificaci�n: ", empleado, &Empleado::numIdentificacion);
+        SolicitarInformacionAlpha("Nombre: ", atributosEmpleado);
+        SolicitarInformacionAlpha("Apellido: ", atributosEmpleado);
+        SolicitarInformacionAlpha("Tipo de identificaci�n (C�dula de ciudadan�a, c�dula de extranjer�a o tarjeta de identidad): ", atributosEmpleado);
+        SolicitarInformacionNum("Numero identificaci�n: ", atributosEmpleado);
 
         char sexo;
         do
@@ -88,23 +33,26 @@ Empleado FormularioEmpleado::SolicitarDatos()
             }
         } while (true);
 
-        empleado.sexo = sexo == 'm' ? true : false;
+        std::string sexoString(1, sexo);
+        atributosEmpleado.AddLast(sexoString);
 
-        SolicitarTelefono("Telefono Fijo: ", empleado, &Empleado::telefonoFijo);
-        SolicitarTelefono("Telefono Celular: ", empleado, &Empleado::telefonoCelular);
+        SolicitarTelefono("Telefono Fijo: ", atributosEmpleado);
+        SolicitarTelefono("Telefono Celular: ", atributosEmpleado);
 
         std::cin.ignore(); // Limpiar el buffer del teclado
 
+        std::string email;
         do
         {
             std::cout << "Email: ";
-            std::cin >> empleado.email;
+            std::cin >> email;
 
             // Verificar que todos los caracteres son alfanum�ricos, '@' o '.'
-            if (std::all_of(empleado.email.begin(), empleado.email.end(),
+            if (std::all_of(email.begin(), email.end(),
                             [](char c)
                             { return std::isalnum(c) || c == '@' || c == '.'; }))
             {
+                atributosEmpleado.AddLast(email);
                 break; // Salir del bucle si todos son v�lidos
             }
             else
@@ -115,16 +63,18 @@ Empleado FormularioEmpleado::SolicitarDatos()
 
         std::cin.ignore(); // Limpiar el buffer del teclado
 
+        std::string fechaNacimiento;
         do
         {
             std::cout << "Fecha De Nacimiento: ";
-            std::cin >> empleado.fechaNacimiento;
+            std::cin >> fechaNacimiento;
 
             // Verificar que todos los caracteres son alfanum�ricos, '@' o '.'
-            if (std::all_of(empleado.fechaNacimiento.begin(), empleado.fechaNacimiento.end(),
+            if (std::all_of(fechaNacimiento.begin(), fechaNacimiento.end(),
                             [](char c)
                             { return std::isalnum(c) || c == '/'; }))
             {
+                atributosEmpleado.AddLast(fechaNacimiento);
                 break; // Salir del bucle si todos son v�lidos
             }
             else
@@ -135,17 +85,18 @@ Empleado FormularioEmpleado::SolicitarDatos()
 
         std::cin.ignore(); // Limpiar el buffer del teclado
 
-        SolicitarInformacionAlpha("Ciudad de Nacimiento: ", empleado, &Empleado::ciudadNacimiento);
-        SolicitarInformacionAlpha("Pais de Nacimiento: ", empleado, &Empleado::paisNacimiento);
-        SolicitarInformacionAlpha("Ciudad de Residencia: ", empleado, &Empleado::ciudadResidencia);
-        SolicitarInformacionAlpha("Pais Residencia: ", empleado, &Empleado::paisResidencia);
+        SolicitarInformacionAlpha("Ciudad de Nacimiento: ", atributosEmpleado);
+        SolicitarInformacionAlpha("Pais de Nacimiento: ", atributosEmpleado);
+        SolicitarInformacionAlpha("Ciudad de Residencia: ", atributosEmpleado);
+        SolicitarInformacionAlpha("Pais Residencia: ", atributosEmpleado);
 
-        SolicitarInformacionAlpha("Barrio: ", empleado, &Empleado::barrio);
-        SolicitarInformacionAlpha("Actividad Laboral: ", empleado, &Empleado::actividadLaboral);
-
+        std::string direccion;
         PRINT("Dirección: ");
-        std::cin >> empleado.direccion;
+        std::cin >> direccion;
         std::cin.ignore();
+
+        SolicitarInformacionAlpha("Barrio: ", atributosEmpleado);
+        SolicitarInformacionAlpha("Actividad Laboral: ", atributosEmpleado);
 
         char op;
         do
@@ -169,23 +120,84 @@ Empleado FormularioEmpleado::SolicitarDatos()
             }
         } while (true);
 
-        empleado.tieneHijos = op == 's' ? true : false;
+        std::string tieneHijos(1, op);
+        atributosEmpleado.AddLast(tieneHijos);
 
-        if (empleado.tieneHijos)
+        std::string numHijos;
+        if (tieneHijos == "s")
         {
+            std::string numHijos;
             std::cout << "Numero de Hijos: ";
-            std::cin >> empleado.numHijos;
+            std::cin >> numHijos;
         }
-        return empleado;
+        else
+            numHijos = "0";
+
+        atributosEmpleado.AddLast(numHijos);
+        return atributosEmpleado;
     }
     catch (const std::invalid_argument &e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
-        return Empleado();
     }
     catch (...)
     {
         std::cerr << "Error desconocido durante la captura de informaci�n del empleado." << std::endl;
-        return Empleado();
     }
-}*/
+}
+
+void FormularioEmpleado::SolicitarInformacionAlpha(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados)
+{
+    std::string atributo;
+    do
+    {
+        PRINT(mensajeAtributo);
+        std::getline(std::cin, atributo);
+        if (!std::all_of((atributo).begin(), (atributo).end(), ::isalpha))
+            std::cerr << mensajeErrorLetras << std::endl;
+        else
+            atributosEmpleados.AddLast(atributo);
+    } while (!std::all_of((atributo).begin(), (atributo).end(), ::isalpha));
+}
+
+void FormularioEmpleado::SolicitarInformacionNum(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados)
+{
+    std::string atributo;
+    do
+    {
+        PRINT(mensajeAtributo);
+        std::getline(std::cin, atributo);
+        if (!std::all_of((atributo).begin(), (atributo).end(), ::isdigit))
+            std::cerr << mensajeErrorNumeros << std::endl;
+        else
+            atributosEmpleados.AddLast(atributo);
+
+    } while (!std::all_of((atributo).begin(), (atributo).end(), ::isdigit));
+}
+
+void FormularioEmpleado::SolicitarTelefono(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados)
+{
+    do
+    {
+        std::cout << mensajeAtributo;
+        std::string atributo;
+
+        // Verificar si la entrada es un n�mero
+        if (std::cin.fail() || !std::all_of((atributo).begin(), (atributo).end(), ::isdigit))
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cerr << "Error: El tel�fono debe ser un n�mero v�lido." << std::endl;
+        }
+        else if ((atributo).length() != 10)
+        {
+            // Verificar la longitud del n�mero (ajusta seg�n sea necesario)
+            std::cerr << "Error: El tel�fono debe tener 10 d�gitos." << std::endl;
+        }
+        else
+        {
+            atributosEmpleados.AddLast(atributo);
+            break; // Salir del bucle si la entrada es v�lida
+        }
+    } while (true);
+}
