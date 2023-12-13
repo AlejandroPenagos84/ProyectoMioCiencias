@@ -29,15 +29,34 @@ int main()
     if (auto *multilistaEmpleado = dynamic_cast<MultilistaEmpleado *>(MultilistaEmpleados))
     {
         // Solo si el casting es exitoso, puedes acceder a los métodos específicos de MultilistaEmpleado
-        Nodo<std::string, Cabecera<Empleado>> *n = multilistaEmpleado->getCabeceraCiudadNacimiento()->findNodo("New York");
+        Nodo<std::string, Cabecera<Empleado>> *n = multilistaEmpleado->getCabeceraActividadLaboral()->findNodo("Ingeniero de Software");
 
         Empleado *aux = n->Valor.primerDato;
+        std::cout << aux->getNombre() << std::endl;
+        std::cout << (aux->getSigActividadLaboral() == NULL) << std::endl;
 
         while (aux != NULL)
         {
-            PRINTLN(aux->getNombre());
-            PRINTLN(aux->getPaisNacimiento());
-            aux = aux->getSigCiudadNacimiento();
+            if (aux != NULL)
+            {
+                PRINTLN(aux->getNombre());
+            }
+            aux = aux->getSigActividadLaboral();
+        }
+        multilistaEmpleado->Eliminar("Will Smith");
+        aux = n->Valor.primerDato;
+
+        PRINTLN("-----------------------------------------");
+
+        while (aux != NULL)
+        {
+            if (aux != NULL)
+            {
+                PRINTLN(aux->getNombre());
+            }
+            aux = aux->getSigActividadLaboral();
         }
     }
+
+    return 0;
 }

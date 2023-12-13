@@ -41,7 +41,7 @@ private:
     DoubleLinkedList<Empleado> empleados;
 
     // Árbol que guardará la dirección de los empleados para facilitar la búsqueda y organización.
-    RBTree<std::string, Empleado> *arbolEmpleados;
+    RBTree<std::string, Empleado *> *arbolEmpleados;
 
     // Árboles de Cabeceras
     RBTree<std::string, Cabecera<Empleado>> *cabeceraCiudadNacimiento;
@@ -59,7 +59,7 @@ public:
     MultilistaEmpleado();
 
     void Agregar(Empleado &empleado) override;
-    void Eliminar(Empleado &empleado) override;
+    void Eliminar(std::string nombreEmpleado) override;
     void Modificar(Empleado &empleado) override;
 
     // Getters
@@ -80,6 +80,10 @@ private:
     void ManejarNodoExistente(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, GettersEmpleado<std::string> getters, SettersEmpleado<std::string> setters);
     void ManejarNodosExistenteUnDato(Cabecera<Empleado> &cabEmpleado, Empleado *empleado, GettersEmpleado<std::string> getters, SettersEmpleado<std::string> setters);
     void ManejarNodoExistenteVariosDatos(Cabecera<Empleado> &cabEmpleado, Empleado *empleado, GettersEmpleado<std::string> getters, SettersEmpleado<std::string> setters);
+
+    // Metodo para eliminar un empleado
+    void EliminarDelArbol(std::string nombreCompleto);
+    void ManejoDeCabecerasEliminar(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, GettersEmpleado<std::string> getters, SettersEmpleado<std::string> setters);
 
     // Metodos para obtener los getters y setters especificados
     GettersEmpleado<std::string> ConfigurarGettersEmpleado(std::string (Empleado::*atributo)() const, Empleado *(Empleado::*punteroAnt)() const, Empleado *(Empleado::*punteroSig)() const);

@@ -139,10 +139,12 @@ DoubleLinkedList<std::string> FormularioEmpleado::SolicitarDatos()
     catch (const std::invalid_argument &e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
+        return DoubleLinkedList<std::string>();
     }
     catch (...)
     {
         std::cerr << "Error desconocido durante la captura de informaci�n del empleado." << std::endl;
+        return DoubleLinkedList<std::string>();
     }
 }
 

@@ -2,7 +2,7 @@
 
 MultilistaEmpleado::MultilistaEmpleado()
 {
-    arbolEmpleados = new RBTree<std::string, Empleado>;
+    arbolEmpleados = new RBTree<std::string, Empleado *>;
     cabeceraCiudadNacimiento = new RBTree<std::string, Cabecera<Empleado>>;
     cabeceraPaisNacimiento = new RBTree<std::string, Cabecera<Empleado>>;
     cabeceraCiudadResidencia = new RBTree<std::string, Cabecera<Empleado>>;
@@ -20,9 +20,10 @@ void MultilistaEmpleado::Agregar(Empleado &empleado)
 void MultilistaEmpleado::AgregarAArbol(Empleado &empleado)
 {
     std::string nombreCompleto = empleado.getNombre() + " " + empleado.getApellido();
-    Nodo<std::string, Empleado> *nodo = arbolEmpleados->createNodo(nombreCompleto, empleado);
+    Nodo<std::string, Empleado *> *nodo = arbolEmpleados->createNodo(nombreCompleto, &empleado);
     arbolEmpleados->Insert(arbolEmpleados, nodo);
 }
+
 void MultilistaEmpleado::OrganizarDatos(Empleado &empleado)
 {
     GettersEmpleado<std::string> getterEmpleadoCiudadNacimiento = ConfigurarGettersEmpleado(&Empleado::getCiudadNacimiento, &Empleado::getAntCiudadNacimiento, &Empleado::getSigCiudadNacimiento);
@@ -77,6 +78,8 @@ void MultilistaEmpleado::ManejarNodoNoExistente(RBTree<std::string, Cabecera<Emp
     Cabecera<Empleado> cabEmpleado;
     cabEmpleado.primerDato = empleado;
     cabEmpleado.ultimoDato = NULL;
+    (cabEmpleado.primerDato->*setters.setPunteroAnt)(NULL);
+    (cabEmpleado.primerDato->*setters.setPunteroSig)(NULL);
 
     Nodo<std::string, Cabecera<Empleado>> *nodo = arbolCabecera->createNodo((empleado->*getters.obtenerDato)(), cabEmpleado);
     arbolCabecera->Insert(arbolCabecera, nodo);
@@ -107,8 +110,90 @@ void MultilistaEmpleado::ManejarNodoExistenteVariosDatos(Cabecera<Empleado> &cab
     (cabEmpleado.ultimoDato->*setters.setPunteroSig)(NULL);
 }
 
-void MultilistaEmpleado::Eliminar(Empleado &empleado)
+void MultilistaEmpleado::Eliminar(std::string nombreEmpleado)
 {
+    Empleado *&empleadoAEliminar = arbolEmpleados->findNodo(nombreEmpleado)->Valor;
+    if (empleadoAEliminar != NULL)
+    {
+
+        GettersEmpleado<std::string> getterEmpleadoCiudadNacimiento = ConfigurarGettersEmpleado(&Empleado::getCiudadNacimiento, &Empleado::getAntCiudadNacimiento, &Empleado::getSigCiudadNacimiento);
+        SettersEmpleado<std::string> setterEmpleadoCiudadNacimiento = ConfigurarSettersEmpleado(&Empleado::setCiudadNacimiento, &Empleado::setAntCiudadNacimiento, &Empleado::setSigCiudadNacimiento);
+        ManejoDeCabecerasEliminar(cabeceraCiudadNacimiento, empleadoAEliminar, getterEmpleadoCiudadNacimiento, setterEmpleadoCiudadNacimiento);
+
+        GettersEmpleado<std::string> getterEmpleadoPaisNacimiento = ConfigurarGettersEmpleado(&Empleado::getPaisNacimiento, &Empleado::getAntPaisNacimiento, &Empleado::getSigPaisNacimiento);
+        SettersEmpleado<std::string> setterEmpleadoPaisNacimiento = ConfigurarSettersEmpleado(&Empleado::setPaisNacimiento, &Empleado::setAntPaisNacimiento, &Empleado::setSigPaisNacimiento);
+        ManejoDeCabecerasEliminar(cabeceraPaisNacimiento, empleadoAEliminar, getterEmpleadoPaisNacimiento, setterEmpleadoPaisNacimiento);
+
+        GettersEmpleado<std::string> getterEmpleadoCiudadResidencia = ConfigurarGettersEmpleado(&Empleado::getCiudadResidencia, &Empleado::getAntCiudadResidencia, &Empleado::getSigCiudadResidencia);
+        SettersEmpleado<std::string> setterEmpleadoCiudadResidencia = ConfigurarSettersEmpleado(&Empleado::setCiudadResidencia, &Empleado::setAntCiudadResidencia, &Empleado::setSigCiudadResidencia);
+        ManejoDeCabecerasEliminar(cabeceraCiudadResidencia, empleadoAEliminar, getterEmpleadoCiudadResidencia, setterEmpleadoCiudadResidencia);
+
+        GettersEmpleado<std::string> getterEmpleadoPaisResidencia = ConfigurarGettersEmpleado(&Empleado::getPaisResidencia, &Empleado::getAntPaisResidencia, &Empleado::getSigPaisResidencia);
+        SettersEmpleado<std::string> setterEmpleadoPaisResidencia = ConfigurarSettersEmpleado(&Empleado::setPaisResidencia, &Empleado::setAntPaisResidencia, &Empleado::setSigPaisResidencia);
+        ManejoDeCabecerasEliminar(cabeceraPaisResidencia, empleadoAEliminar, getterEmpleadoPaisResidencia, setterEmpleadoPaisResidencia);
+
+        GettersEmpleado<std::string> getterEmpleadoActividadLaboral = ConfigurarGettersEmpleado(&Empleado::getActividadLaboral, &Empleado::getAntActividadLaboral, &Empleado::getSigActividadLaboral);
+        SettersEmpleado<std::string> setterEmpleadoActividadLaboral = ConfigurarSettersEmpleado(&Empleado::setActividadLaboral, &Empleado::setAntActividadLaboral, &Empleado::setSigActividadLaboral);
+        ManejoDeCabecerasEliminar(cabeceraActividadLaboral, empleadoAEliminar, getterEmpleadoActividadLaboral, setterEmpleadoActividadLaboral);
+
+        empleadoAEliminar->setSigEdad(NULL);
+        empleadoAEliminar->setAntEdad(NULL);
+        empleadoAEliminar->setSigSexo(NULL);
+        empleadoAEliminar->setAntSexo(NULL);
+
+        EliminarDelArbol(nombreEmpleado);
+
+        empleadoAEliminar = NULL;
+
+        delete empleadoAEliminar;
+    }
+}
+
+void MultilistaEmpleado::EliminarDelArbol(std::string nombreCompleto)
+{
+    Nodo<std::string, Empleado *> *nodoAEliminar = arbolEmpleados->findNodo(nombreCompleto);
+    arbolEmpleados->Delete(arbolEmpleados, nodoAEliminar);
+}
+
+void MultilistaEmpleado::ManejoDeCabecerasEliminar(RBTree<std::string, Cabecera<Empleado>> *arbolCabecera, Empleado *empleado, GettersEmpleado<std::string> getters, SettersEmpleado<std::string> setters)
+{
+
+    Nodo<std::string, Cabecera<Empleado>> *nodo = arbolCabecera->findNodo((empleado->*getters.obtenerDato)());
+    Cabecera<Empleado> &cabEmpleado = nodo->Valor;
+
+    if (cabEmpleado.primerDato == empleado)
+    {
+
+        Empleado *auxEmpleado = (cabEmpleado.primerDato->*getters.obtenerPunteroSig)();
+
+        cabEmpleado.primerDato = auxEmpleado;
+
+        if (cabEmpleado.primerDato != NULL)
+            (cabEmpleado.primerDato->*setters.setPunteroAnt)(NULL);
+
+        // std::cout << (cabEmpleado.primerDato->*getters.obtenerPunteroAnt)() << std::endl;
+    }
+    else if (cabEmpleado.ultimoDato == empleado)
+    {
+        Empleado *empleadoAEliminar = empleado;
+        Empleado *empleadoAnt = (cabEmpleado.ultimoDato->*getters.obtenerPunteroAnt)();
+
+        cabEmpleado.ultimoDato = empleadoAnt;
+        (cabEmpleado.ultimoDato->*setters.setPunteroSig)(NULL);
+    }
+    else
+    {
+        Empleado *empleadoAEliminar = empleado;
+
+        Empleado *empleadoAnt = (empleado->*getters.obtenerPunteroAnt)();
+        Empleado *empleadoSig = (empleado->*getters.obtenerPunteroSig)();
+
+        (empleadoAnt->*setters.setPunteroSig)(empleadoSig);
+        (empleadoSig->*setters.setPunteroAnt)(empleadoAnt);
+    }
+
+    (empleado->*setters.setPunteroAnt)(NULL);
+    (empleado->*setters.setPunteroSig)(NULL);
 }
 
 void MultilistaEmpleado::Modificar(Empleado &empleado) {}
