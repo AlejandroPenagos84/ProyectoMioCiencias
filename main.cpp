@@ -5,7 +5,7 @@
 #include "Estructuras/Cabecera.hpp"
 
 #include "Librerias/ListaDoble.hpp"
-
+#include "Multilistas/ManejarPunteros.hpp"
 #include "ControlDAO/ControlDaoEmpleado.hpp"
 
 #define for(i, n) for (int i = 0; i < n; ++i)
@@ -29,11 +29,9 @@ int main()
     if (auto *multilistaEmpleado = dynamic_cast<MultilistaEmpleado *>(MultilistaEmpleados))
     {
         // Solo si el casting es exitoso, puedes acceder a los métodos específicos de MultilistaEmpleado
-        Nodo<std::string, Cabecera<Empleado>> *n = multilistaEmpleado->getCabeceraActividadLaboral()->findNodo("Ingeniero de Software");
+        Nodo<std::string, Cabecera<Empleado>> *n = multilistaEmpleado->getCabeceraCiudadNacimiento()->findNodo("New York");
 
         Empleado *aux = n->Valor.primerDato;
-        std::cout << aux->getNombre() << std::endl;
-        std::cout << (aux->getSigActividadLaboral() == NULL) << std::endl;
 
         while (aux != NULL)
         {
@@ -41,20 +39,21 @@ int main()
             {
                 PRINTLN(aux->getNombre());
             }
-            aux = aux->getSigActividadLaboral();
+            aux = aux->getSigCiudadNacimiento();
         }
-        multilistaEmpleado->Eliminar("Will Smith");
-        aux = n->Valor.primerDato;
 
+        MultilistaEmpleados->Eliminar("Bob Smith");
         PRINTLN("-----------------------------------------");
 
+        aux = n->Valor.primerDato;
+
         while (aux != NULL)
         {
             if (aux != NULL)
             {
                 PRINTLN(aux->getNombre());
             }
-            aux = aux->getSigActividadLaboral();
+            aux = aux->getSigCiudadNacimiento();
         }
     }
 
