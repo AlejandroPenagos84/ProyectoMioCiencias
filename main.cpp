@@ -7,6 +7,7 @@
 #include "Librerias/ListaDoble.hpp"
 #include "Multilistas/ManejarPunteros.hpp"
 #include "ControlDAO/ControlDaoEmpleado.hpp"
+#include <crtdbg.h>
 
 #define for(i, n) for (int i = 0; i < n; ++i)
 #define PRINT(x) std::cout << x
@@ -56,6 +57,6 @@ int main()
             aux = aux->getSigCiudadNacimiento();
         }
     }
-
+    _CrtDumpMemoryLeaks();
     return 0;
 }

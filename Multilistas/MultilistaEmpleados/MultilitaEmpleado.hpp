@@ -60,6 +60,17 @@ private:
     // Metodo para eliminar un empleado}
     void EliminarDelArbol(std::string nombreCompleto);
     void ManejarCabeceras(Empleado *&empleadoAEliminar, std::string nombreEmpleado);
+
+    GettersObjeto<std::string, Empleado> getterCiudadNacimiento();
+    SettersObjeto<std::string, Empleado> setterCiudadNacimiento();
+    GettersObjeto<std::string, Empleado> getterPaisNacimiento();
+    SettersObjeto<std::string, Empleado> setterPaisNacimiento();
+    GettersObjeto<std::string, Empleado> getterCiudadResidencia();
+    SettersObjeto<std::string, Empleado> setterCiudadResidencia();
+    GettersObjeto<std::string, Empleado> getterPaisResidencia();
+    SettersObjeto<std::string, Empleado> setterPaisResidencia();
+    GettersObjeto<std::string, Empleado> getterActividadLaboral();
+    SettersObjeto<std::string, Empleado> setterActividadLaboral();
 };
 
 #endif

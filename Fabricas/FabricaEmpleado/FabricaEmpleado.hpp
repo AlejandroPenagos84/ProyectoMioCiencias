@@ -8,9 +8,12 @@ class FabricaEmpleado : public FabricaAbtracta<Empleado>
 public:
     Empleado crearObjeto(DoubleLinkedList<std::string> listaAtributos);
     RBTree<std::string, Empleado> *crearArbol(DoubleLinkedList<DoubleLinkedList<std::string>> listaEmpleados);
+    DoubleLinkedList<std::string> *crearListaDeAtributos(Empleado empleado);
 
 private:
     bool tieneHijosToBool(std::string tieneHijos);
     bool sexoToBool(std::string sexo);
+    std::string sexoToString(bool sexo);
+    std::string tieneHijosToString(bool tieneHijos);
 };
 #endif
