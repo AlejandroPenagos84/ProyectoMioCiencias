@@ -41,9 +41,9 @@ private:
 public:
     MultilistaEmpleado();
 
-    void Agregar(Empleado &empleado) override;
-    void Eliminar(std::string nombreEmpleado) override;
-    void Modificar(std::string nombreEmpleado, Empleado *empleado) override;
+    void Agregar(Empleado &empleado);
+    void Eliminar(std::string nombreEmpleado);
+    void Modificar(std::string nombreEmpleado, Empleado *empleado);
 
     // Getters
     RBTree<std::string, Cabecera<Empleado>> *getCabeceraCiudadNacimiento();
