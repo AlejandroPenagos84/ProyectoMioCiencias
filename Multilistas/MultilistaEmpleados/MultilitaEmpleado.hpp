@@ -43,7 +43,7 @@ public:
 
     void Agregar(Empleado &empleado) override;
     void Eliminar(std::string nombreEmpleado) override;
-    void Modificar(std::string nombreEmpleado, Empleado empleado) override;
+    void Modificar(std::string nombreEmpleado, Empleado *empleado) override;
 
     // Getters
     RBTree<std::string, Cabecera<Empleado>> *getCabeceraCiudadNacimiento();

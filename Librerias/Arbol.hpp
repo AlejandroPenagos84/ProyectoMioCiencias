@@ -38,7 +38,14 @@ namespace Arbol
     public:
         RBTree()
         {
-            nullNode = new Nodo<T, S>{T(), S(), 0, NULL, NULL, NULL};
+            nullNode = new Nodo<T, S>;
+            nullNode->Clave = T();
+            nullNode->Valor = S();
+            nullNode->color = 0;
+            nullNode->left = NULL;
+            nullNode->right = NULL;
+            nullNode->parent = NULL;
+
             root = nullNode;
         }
 

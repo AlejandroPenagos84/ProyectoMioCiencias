@@ -15,7 +15,7 @@ const std::string mensajeErrorNumeros = "Error : Solo se pueden ingresar número
 class FormularioEmpleado : public Formulario
 {
 public:
-    DoubleLinkedList<std::string> SolicitarDatos() override;
+    DoubleLinkedList<std::string> SolicitarDatos() ;
     void SolicitarInformacionAlpha(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados);
     void SolicitarInformacionNum(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados);
     void SolicitarTelefono(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados);

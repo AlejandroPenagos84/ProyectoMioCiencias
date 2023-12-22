@@ -10,6 +10,7 @@
                 "${fileDirname}\\**.cpp",
                 "${fileDirname}\\Multilistas\\MultilistaEmpleados\\**.cpp",
                 "${fileDirname}\\ControlDAO\\**.cpp",
+                "${fileDirname}\\Fabricas\\FabricaEmpleado\\**.cpp",
                 "${fileDirname}\\Vista\\**.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"

@@ -44,9 +44,9 @@ public:
 
     template <class T, class S>
     GettersObjeto<T, S> CofigurarGetters(
-        T (S::*getAtributo)() const,
-        S *(S::*getPunteroAnt)() const,
-        S *(S::*getPunteroSig)() const);
+        T (S::*atributo)() const,
+        S *(S::*punteroAnt)() const,
+        S *(S::*punteroSig)() const);
 
     template <class T, class S>
     SettersObjeto<T, S> ConfigurarSetters(
@@ -55,7 +55,6 @@ public:
         void (S::*setPunteroSig)(S *));
 
 private:
-    // Metodo para agregar
     template <class T, class S>
     void AgregarANodoNoExistente(
         RBTree<T, Cabecera<S>> *arbolCabecera,
@@ -84,7 +83,6 @@ private:
         GettersObjeto<T, S> getters,
         SettersObjeto<T, S> setters);
 
-    // Metodos para eliminar
     template <class T, class S>
     void ManejoCabeceraAlEliminarPrimerElemento(
         Cabecera<S> &cabecera,
@@ -109,14 +107,14 @@ private:
 
 template <class T, class S>
 GettersObjeto<T, S> ManejarPunteros::CofigurarGetters(
-    T (S::*getAtributo)() const,
-    S *(S::*getPunteroAnt)() const,
-    S *(S::*getPunteroSig)() const)
+    T (S::*atributo)() const,
+    S *(S::*punteroAnt)() const,
+    S *(S::*punteroSig)() const)
 {
     GettersObjeto<T, S> getters;
-    getters.obtenerDato = getAtributo;
-    getters.obtenerPunteroAnt = getPunteroAnt;
-    getters.obtenerPunteroSig = getPunteroSig;
+    getters.obtenerDato = atributo;
+    getters.obtenerPunteroAnt = punteroAnt;
+    getters.obtenerPunteroSig = punteroSig;
     return getters;
 }
 
@@ -220,9 +218,8 @@ void ManejarPunteros::ManejoDeCabecerasEliminar(
     else
         ManejoCabeceraAlEliminarCualquierElemento(objeto, getters, setters);
 
-    (objeto->*setters.setPunteroAnt)(NULL);
-    (objeto->*setters.setPunteroSig)(NULL);
     ManejoArbolCabecera(arbolCabecera, nodo);
+    // delete nodo;
 }
 
 template <class T, class S>

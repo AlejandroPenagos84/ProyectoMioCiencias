@@ -26,21 +26,25 @@ void MultilistaEmpleado::AgregarAArbol(Empleado &empleado)
 
 void MultilistaEmpleado::OrganizarDatos(Empleado &empleado)
 {
-    GettersObjeto<std::string, Empleado> getterEmpleadoCiudadNacimiento =
-        manejoPunteros.CofigurarGetters(&Empleado::getCiudadNacimiento,
-                                        &Empleado::getAntCiudadNacimiento,
-                                        &Empleado::getSigCiudadNacimiento);
+    manejoPunteros->OrganizarPunterosAlAgregar(
+        cabeceraCiudadNacimiento, &empleado,
+        getterCiudadNacimiento(), setterCiudadNacimiento());
 
-    SettersObjeto<std::string, Empleado> setterEmpleadoCiudadNacimiento =
-        manejoPunteros.ConfigurarSetters(
-            &Empleado::setCiudadNacimiento,
-            &Empleado::setAntCiudadNacimiento,
-            &Empleado::setSigCiudadNacimiento);
+    manejoPunteros->OrganizarPunterosAlAgregar(
+        cabeceraPaisNacimiento, &empleado,
+        getterPaisNacimiento(), setterPaisNacimiento());
 
-    manejoPunteros.OrganizarPunterosAlAgregar(
-        cabeceraCiudadNacimiento,
-        &empleado, getterEmpleadoCiudadNacimiento,
-        setterEmpleadoCiudadNacimiento);
+    manejoPunteros->OrganizarPunterosAlAgregar(
+        cabeceraPaisResidencia, &empleado,
+        getterPaisResidencia(), setterPaisResidencia());
+
+    manejoPunteros->OrganizarPunterosAlAgregar(
+        cabeceraCiudadResidencia, &empleado,
+        getterCiudadResidencia(), setterCiudadResidencia());
+
+    manejoPunteros->OrganizarPunterosAlAgregar(
+        cabeceraActividadLaboral, &empleado,
+        getterActividadLaboral(), setterActividadLaboral());
 }
 
 // Elimina un empleado
@@ -54,23 +58,45 @@ void MultilistaEmpleado::Eliminar(std::string nombreEmpleado)
 // Metodo que reune todo las cabecera y atributos con punteros para poder eiminar un empleado
 void MultilistaEmpleado::ManejarCabeceras(Empleado *&empleadoAEliminar, std::string nombreEmpleado)
 {
-    manejoPunteros.ManejoDeCabecerasEliminar(
+    manejoPunteros->ManejoDeCabecerasEliminar(
         cabeceraCiudadNacimiento, empleadoAEliminar,
         getterCiudadNacimiento(), setterCiudadNacimiento());
+
+    manejoPunteros->ManejoDeCabecerasEliminar(
+        cabeceraPaisNacimiento, empleadoAEliminar,
+        getterPaisNacimiento(), setterPaisNacimiento());
+
+    manejoPunteros->ManejoDeCabecerasEliminar(
+        cabeceraPaisResidencia, empleadoAEliminar,
+        getterPaisResidencia(), setterPaisResidencia());
+
+    manejoPunteros->ManejoDeCabecerasEliminar(
+        cabeceraCiudadResidencia, empleadoAEliminar,
+        getterCiudadResidencia(), setterCiudadResidencia());
+
+    manejoPunteros->ManejoDeCabecerasEliminar(
+        cabeceraActividadLaboral, empleadoAEliminar,
+        getterActividadLaboral(), setterActividadLaboral());
 }
 
-// Metodo que elimina de un arbol
 void MultilistaEmpleado::EliminarDelArbol(std::string nombreCompleto)
 {
     Nodo<std::string, Empleado *> *nodoAEliminar = arbolEmpleados->findNodo(nombreCompleto);
     arbolEmpleados->Delete(arbolEmpleados, nodoAEliminar);
 }
 
-void MultilistaEmpleado::Modificar(std::string nombreEmpleado, Empleado empleado) {}
+void MultilistaEmpleado::Modificar(std::string nombreEmpleado, Empleado *empleado)
+{
+    Empleado *&empleadoEnElArbol = arbolEmpleados->findNodo(nombreEmpleado)->Valor;
+
+    modificarAtributos->ModificarAtributoConPunteros(
+        cabeceraCiudadNacimiento, empleadoEnElArbol,
+        empleado, getterCiudadNacimiento(), setterCiudadNacimiento());
+}
 
 GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterCiudadNacimiento()
 {
-    return manejoPunteros.CofigurarGetters(
+    return manejoPunteros->CofigurarGetters(
         &Empleado::getCiudadNacimiento,
         &Empleado::getAntCiudadNacimiento,
         &Empleado::getSigCiudadNacimiento);
@@ -78,7 +104,7 @@ GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterCiudadNacimiento(
 
 SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterCiudadNacimiento()
 {
-    return manejoPunteros.ConfigurarSetters(
+    return manejoPunteros->ConfigurarSetters(
         &Empleado::setCiudadNacimiento,
         &Empleado::setAntCiudadNacimiento,
         &Empleado::setSigCiudadNacimiento);
@@ -86,7 +112,7 @@ SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterCiudadNacimiento(
 
 GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterPaisNacimiento()
 {
-    return manejoPunteros.CofigurarGetters(
+    return manejoPunteros->CofigurarGetters(
         &Empleado::getPaisNacimiento,
         &Empleado::getAntPaisNacimiento,
         &Empleado::getSigPaisNacimiento);
@@ -94,18 +120,59 @@ GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterPaisNacimiento()
 
 SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterPaisNacimiento()
 {
-    return manejoPunteros.ConfigurarSetters(
+    return manejoPunteros->ConfigurarSetters(
         &Empleado::setPaisNacimiento,
         &Empleado::setAntPaisNacimiento,
         &Empleado::setSigPaisNacimiento);
 }
 
-GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterCiudadResidencia() {}
-SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterCiudadResidencia() {}
-GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterPaisResidencia() {}
-SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterPaisResidencia() {}
-GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterActividadLaboral() {}
-SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterActividadLaboral() {}
+GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterCiudadResidencia()
+{
+    return manejoPunteros->CofigurarGetters(
+        &Empleado::getCiudadResidencia,
+        &Empleado::getAntCiudadResidencia,
+        &Empleado::getSigCiudadResidencia);
+}
+
+SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterCiudadResidencia()
+{
+    return manejoPunteros->ConfigurarSetters(
+        &Empleado::setCiudadResidencia,
+        &Empleado::setAntCiudadResidencia,
+        &Empleado::setSigCiudadResidencia);
+}
+
+GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterPaisResidencia()
+{
+    return manejoPunteros->CofigurarGetters(
+        &Empleado::getPaisResidencia,
+        &Empleado::getAntPaisResidencia,
+        &Empleado::getSigPaisResidencia);
+}
+
+SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterPaisResidencia()
+{
+    return manejoPunteros->ConfigurarSetters(
+        &Empleado::setPaisResidencia,
+        &Empleado::setAntPaisResidencia,
+        &Empleado::setSigPaisResidencia);
+}
+
+GettersObjeto<std::string, Empleado> MultilistaEmpleado::getterActividadLaboral()
+{
+    return manejoPunteros->CofigurarGetters(
+        &Empleado::getActividadLaboral,
+        &Empleado::getAntActividadLaboral,
+        &Empleado::getSigActividadLaboral);
+}
+
+SettersObjeto<std::string, Empleado> MultilistaEmpleado::setterActividadLaboral()
+{
+    return manejoPunteros->ConfigurarSetters(
+        &Empleado::setActividadLaboral,
+        &Empleado::setAntActividadLaboral,
+        &Empleado::setSigActividadLaboral);
+}
 
 RBTree<std::string, Cabecera<Empleado>> *MultilistaEmpleado::getCabeceraCiudadNacimiento() { return cabeceraCiudadNacimiento; }
 RBTree<std::string, Cabecera<Empleado>> *MultilistaEmpleado::getCabeceraPaisNacimiento() { return cabeceraPaisNacimiento; }

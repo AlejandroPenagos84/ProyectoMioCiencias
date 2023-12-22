@@ -2,6 +2,8 @@
 #define FABRICA_EMPLEADO_HPP
 #include "../FabricaAbstracta.hpp"
 #include "../../Estructuras/Empleado.hpp"
+#include <cstdlib>
+#include <sstream>
 
 class FabricaEmpleado : public FabricaAbtracta<Empleado>
 {
@@ -15,5 +17,8 @@ private:
     bool sexoToBool(std::string sexo);
     std::string sexoToString(bool sexo);
     std::string tieneHijosToString(bool tieneHijos);
+
+    template <class T>
+    std::string convertirAString(const T &valor);
 };
 #endif

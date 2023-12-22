@@ -6,7 +6,7 @@ Empleado FabricaEmpleado::crearObjeto(DoubleLinkedList<std::string> listaAtribut
 
     if (listaAtributos.Size() >= 21)
     {
-        nuevoEmpleado.setId(std::stoi(listaAtributos.getData(1)));
+        nuevoEmpleado.setId(atoi(listaAtributos.getData(1).c_str()));
         nuevoEmpleado.setNombre(listaAtributos.getData(2));
         nuevoEmpleado.setApellido(listaAtributos.getData(3));
         nuevoEmpleado.setTipoIdentificacion(listaAtributos.getData(4));
@@ -24,10 +24,11 @@ Empleado FabricaEmpleado::crearObjeto(DoubleLinkedList<std::string> listaAtribut
         nuevoEmpleado.setBarrio(listaAtributos.getData(16));
         nuevoEmpleado.setActividadLaboral(listaAtributos.getData(17));
         nuevoEmpleado.setTieneHijos(tieneHijosToBool(listaAtributos.getData(18)));
-        nuevoEmpleado.setNumHijos(std::stoi(listaAtributos.getData(19)));
+        nuevoEmpleado.setNumHijos(atoi(listaAtributos.getData(19).c_str()));
         nuevoEmpleado.setNombreSucursal(listaAtributos.getData(20));
-        nuevoEmpleado.setEdad(std::stoi(listaAtributos.getData(21)));
+        nuevoEmpleado.setEdad(atoi(listaAtributos.getData(21).c_str()));
     }
+    return nuevoEmpleado;
 }
 
 RBTree<std::string, Empleado> *FabricaEmpleado::crearArbol(DoubleLinkedList<DoubleLinkedList<std::string>> listaEmpleados)
@@ -46,7 +47,7 @@ RBTree<std::string, Empleado> *FabricaEmpleado::crearArbol(DoubleLinkedList<Doub
 DoubleLinkedList<std::string> *FabricaEmpleado::crearListaDeAtributos(Empleado empleado)
 {
     DoubleLinkedList<std::string> *listaEmpleado = new DoubleLinkedList<std::string>;
-    listaEmpleado->AddLast(std::to_string(empleado.getId()));
+    listaEmpleado->AddLast(convertirAString(empleado.getId()));
     listaEmpleado->AddLast(empleado.getNombre());
     listaEmpleado->AddLast(empleado.getApellido());
     listaEmpleado->AddLast(empleado.getTipoIdentificacion());
@@ -64,9 +65,9 @@ DoubleLinkedList<std::string> *FabricaEmpleado::crearListaDeAtributos(Empleado e
     listaEmpleado->AddLast(empleado.getBarrio());
     listaEmpleado->AddLast(empleado.getActividadLaboral());
     listaEmpleado->AddLast(tieneHijosToString(empleado.getTieneHijos()));
-    listaEmpleado->AddLast(std::to_string(empleado.getNumHijos()));
+    listaEmpleado->AddLast(convertirAString(empleado.getNumHijos()));
     listaEmpleado->AddLast(empleado.getNombreSucursal());
-    listaEmpleado->AddLast(std::to_string(empleado.getEdad()));
+    listaEmpleado->AddLast(convertirAString(empleado.getEdad()));
 
     return listaEmpleado;
 }
@@ -89,4 +90,12 @@ std::string FabricaEmpleado::tieneHijosToString(bool tieneHijos)
 std::string FabricaEmpleado::sexoToString(bool sexo)
 {
     return sexo ? "m" : "f";
+}
+
+template <class T>
+std::string FabricaEmpleado::convertirAString(const T &valor)
+{
+    std::ostringstream stream;
+    stream << valor;
+    return stream.str();
 }
