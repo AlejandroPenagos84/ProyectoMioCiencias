@@ -1,5 +1,3 @@
-
-
 #ifndef DOUBLELINKEDLIST_HPP
 #define DOUBLELINKEDLIST_HPP
 
@@ -47,7 +45,8 @@ namespace ListaDoble
 		 * @brief Devuelve el tamaño de la lista.
 		 * @return Tamaño de la lista.
 		 */
-		int Size();
+		int
+		Size();
 
 		void AddFirst(T data);
 		/**

@@ -32,11 +32,10 @@ private:
     RBTree<std::string, Cabecera<Empleado>> *cabeceraCiudadResidencia;
     RBTree<std::string, Cabecera<Empleado>> *cabeceraPaisResidencia;
     RBTree<std::string, Cabecera<Empleado>> *cabeceraActividadLaboral;
-
-    // Se guardan en arreglos normales las cabeceras de rangos
-    Cabecera<Empleado> *edad;
-    Cabecera<Empleado> *numHijos;
-    Cabecera<Empleado> *sexo;
+    RBTree<int, Cabecera<Empleado>> *cabeceraEdad;
+    RBTree<int, Cabecera<Empleado>> *cabeceraNumeroHijos;
+    RBTree<bool, Cabecera<Empleado>> *cabeceraSexo;
+    int size;
 
 public:
     MultilistaEmpleado();
@@ -44,6 +43,7 @@ public:
     void Agregar(Empleado &empleado);
     void Eliminar(std::string nombreEmpleado);
     void Modificar(std::string nombreEmpleado, Empleado *empleado);
+    Empleado *getObjeto(std::string nombreEmpleado);
 
     // Getters
     RBTree<std::string, Cabecera<Empleado>> *getCabeceraCiudadNacimiento();
@@ -51,6 +51,10 @@ public:
     RBTree<std::string, Cabecera<Empleado>> *getCabeceraCiudadResidencia();
     RBTree<std::string, Cabecera<Empleado>> *getCabeceraPaisResidencia();
     RBTree<std::string, Cabecera<Empleado>> *getCabeceraActividadLaboral();
+    RBTree<int, Cabecera<Empleado>> *getCabeceraEdad();
+    RBTree<int, Cabecera<Empleado>> *getNumHijos();
+    RBTree<bool, Cabecera<Empleado>> *getSexo();
+    int getSize();
 
 private:
     // Metodos para agregar un empleado
@@ -71,6 +75,12 @@ private:
     SettersObjeto<std::string, Empleado> setterPaisResidencia();
     GettersObjeto<std::string, Empleado> getterActividadLaboral();
     SettersObjeto<std::string, Empleado> setterActividadLaboral();
+    GettersObjeto<int, Empleado> getterEdad();
+    SettersObjeto<int, Empleado> setterEdad();
+    GettersObjeto<int, Empleado> getterNumeroHijos();
+    SettersObjeto<int, Empleado> setterNumeroHijos();
+    GettersObjeto<bool, Empleado> getterSexo();
+    SettersObjeto<bool, Empleado> setterSexo();
 };
 
 #endif

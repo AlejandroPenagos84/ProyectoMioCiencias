@@ -15,6 +15,9 @@ class ControlDao
 {
 public:
     DoubleLinkedList<DoubleLinkedList<std::string>> LeerDAO(const std::string &filename);
-    // RBTree<std::string, T> *getArbol() = 0;
+    void Agregar(const std::string &filename, DoubleLinkedList<std::string> objeto);
+    void Eliminar(const std::string &filename, std::string idAEliminar);
+    void Modificar(const std::string &filename, std::string idAModificar, DoubleLinkedList<std::string> objetoModificado);
+    std::string ObtenerUltimoID(const std::string &filename);
 };
 #endif

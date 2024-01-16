@@ -43,6 +43,8 @@ public:
     Empleado *getSigActividadLaboral() const { return sigActividadLaboral; }
     Empleado *getAntEdad() const { return antEdad; }
     Empleado *getSigEdad() const { return sigEdad; }
+    Empleado *getAntNumHijos() const { return antNumHijos; }
+    Empleado *getSigNumHijos() const { return sigNumHijos; }
 
     // Setters
     void setId(int nuevoId) { id = nuevoId; }
@@ -50,7 +52,7 @@ public:
     void setApellido(const std::string &nuevoApellido) { apellido = nuevoApellido; }
     void setTipoIdentificacion(const std::string &nuevoTipoIdentificacion) { tipoIdentificacion = nuevoTipoIdentificacion; }
     void setNumIdentificacion(const std::string &nuevoNumIdentificacion) { numIdentificacion = nuevoNumIdentificacion; }
-    void setSexo(bool nuevoSexo) { sexo = nuevoSexo; }
+    void setSexo(const bool &nuevoSexo) { sexo = nuevoSexo; }
     void setTelefonoCelular(const std::string &nuevoTelefonoCelular) { telefonoCelular = nuevoTelefonoCelular; }
     void setTelefonoFijo(const std::string &nuevoTelefonoFijo) { telefonoFijo = nuevoTelefonoFijo; }
     void setEmail(const std::string &nuevoEmail) { email = nuevoEmail; }
@@ -62,10 +64,10 @@ public:
     void setDireccion(const std::string &nuevaDireccion) { direccion = nuevaDireccion; }
     void setBarrio(const std::string &nuevoBarrio) { barrio = nuevoBarrio; }
     void setActividadLaboral(const std::string &nuevaActividadLaboral) { actividadLaboral = nuevaActividadLaboral; }
-    void setTieneHijos(bool nuevoTieneHijos) { tieneHijos = nuevoTieneHijos; }
-    void setNumHijos(int nuevoNumHijos) { numHijos = nuevoNumHijos; }
+    void setTieneHijos(const bool &nuevoTieneHijos) { tieneHijos = nuevoTieneHijos; }
+    void setNumHijos(const int &nuevoNumHijos) { numHijos = nuevoNumHijos; }
     void setNombreSucursal(const std::string &nuevoNombreSucursal) { nombreSucursal = nuevoNombreSucursal; }
-    void setEdad(int nuevaEdad) { edad = nuevaEdad; }
+    void setEdad(const int &nuevaEdad) { edad = nuevaEdad; }
 
     void setAntSexo(Empleado *nuevoAntSexo) { antSexo = nuevoAntSexo; }
     void setSigSexo(Empleado *nuevoSigSexo) { sigSexo = nuevoSigSexo; }
@@ -81,6 +83,8 @@ public:
     void setSigActividadLaboral(Empleado *nuevoSigActividadLaboral) { sigActividadLaboral = nuevoSigActividadLaboral; }
     void setAntEdad(Empleado *nuevoAntEdad) { antEdad = nuevoAntEdad; }
     void setSigEdad(Empleado *nuevoSigEdad) { sigEdad = nuevoSigEdad; }
+    void setAntNumHijos(Empleado *nuevoAntNumHijos) { antNumHijos = nuevoAntNumHijos; }
+    void setSigNumHijos(Empleado *nuevoSigNumHijos) { sigNumHijos = nuevoSigNumHijos; }
 
 private:
     int id;
@@ -134,6 +138,10 @@ private:
     // Edad
     Empleado *antEdad;
     Empleado *sigEdad;
+
+    // Numero De Hijos
+    Empleado *antNumHijos;
+    Empleado *sigNumHijos;
 };
 
 #endif

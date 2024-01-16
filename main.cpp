@@ -9,6 +9,8 @@
 #include "Fabricas/FabricaAbstracta.hpp"
 #include "Fabricas/FabricaEmpleado/FabricaEmpleado.hpp"
 
+#include "Controlador/Controlador.hpp"
+
 #include <fstream>
 #include <cstdlib>
 #include <direct.h>
@@ -23,6 +25,8 @@ using namespace Arbol;
 
 int main()
 {
+    Controlador control;
+    /*
     // Construir una ruta relativa
     const char *nombre_archivo = "\\Archivos\\Empleados.csv";
 
@@ -87,6 +91,6 @@ int main()
         // El casting no fue exitoso, manejar el caso en el que MultilistaEmpleados no es un MultilistaEmpleado
         PRINTLN("No se pudo realizar el casting a MultilistaEmpleado.");
     }
-
+    */
     return 0;
 }

@@ -157,7 +157,7 @@ void ManejarPunteros::AgregarANodoNoExistente(
     (cabecera.primerDato->*setters.setPunteroAnt)(NULL);
     (cabecera.primerDato->*setters.setPunteroSig)(NULL);
 
-    Nodo<std::string, Cabecera<S>> *nodo = arbolCabecera->createNodo((objeto->*getters.obtenerDato)(), cabecera);
+    Nodo<T, Cabecera<S>> *nodo = arbolCabecera->createNodo((objeto->*getters.obtenerDato)(), cabecera);
     arbolCabecera->Insert(arbolCabecera, nodo);
 }
 

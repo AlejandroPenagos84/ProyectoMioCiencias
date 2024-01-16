@@ -9,9 +9,11 @@
                 "-g",
                 "${fileDirname}\\**.cpp",
                 "${fileDirname}\\Multilistas\\MultilistaEmpleados\\**.cpp",
+                "${fileDirname}\\Controlador\\**.cpp",
                 "${fileDirname}\\ControlDAO\\**.cpp",
                 "${fileDirname}\\Fabricas\\FabricaEmpleado\\**.cpp",
                 "${fileDirname}\\Vista\\**.cpp",
+                "${fileDirname}\\Vista\\GestorDatosVista\\**.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

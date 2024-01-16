@@ -14,5 +14,3 @@ ID,Nombre,Apellido,Tipo Identificacion,Numero Identificacion,Sexo,Telefono Celul
 13,Grace,Kim,Cédula,56789012,f,555-987-6543,222-333-4444,grace.kim@example.com,1984-09-22,London,UK,UK,London,505 Birch Street,Camden,Diseñadora Gráfica,s,2,Sucursal XYZ,39
 14,Hector,Garcia,DNI,45678901,m,123-456-7890,987-654-3210,hector.garcia@example.com,1993-07-14,Bogota,Colombia,Colombia,Bogota,606 Oak Avenue,Sunset Hills,Desarrollador de Software,n,0,Sucursal ABC,28
 15,Isabella,Chen,Cédula,78901234,f,555-987-6543,222-333-4444,isabella.chen@example.com,1986-03-05,London,UK,UK,London,707 Pine Street,Westminster,Ingeniera de Sistemas,s,1,Sucursal XYZ,36
-16,Jack,Wilson,DNI,56789012,m,123-456-7890,987-654-3210,jack.wilson@example.com,1989-12-18,New York,USA,USA,New York,808 Cedar Avenue,Brooklyn,Analista de Datos,n,0,Sucursal ABC,32
-17,Will,Smith,Pasaporte,AB123456,m,555-123-4567,222-987-6543,michael.smith@example.com,1985-09-22,New York,USA,USA,New York,789 Elm Street,Golden Gate,Ingeniero de Software,s,3,Sucursal ABC,36

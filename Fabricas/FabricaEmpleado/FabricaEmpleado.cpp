@@ -44,30 +44,30 @@ RBTree<std::string, Empleado> *FabricaEmpleado::crearArbol(DoubleLinkedList<Doub
     return arbolEmpleados;
 }
 
-DoubleLinkedList<std::string> *FabricaEmpleado::crearListaDeAtributos(Empleado empleado)
+DoubleLinkedList<std::string> FabricaEmpleado::crearListaDeAtributos(Empleado *empleado)
 {
-    DoubleLinkedList<std::string> *listaEmpleado = new DoubleLinkedList<std::string>;
-    listaEmpleado->AddLast(convertirAString(empleado.getId()));
-    listaEmpleado->AddLast(empleado.getNombre());
-    listaEmpleado->AddLast(empleado.getApellido());
-    listaEmpleado->AddLast(empleado.getTipoIdentificacion());
-    listaEmpleado->AddLast(empleado.getNumIdentificacion());
-    listaEmpleado->AddLast(sexoToString(empleado.getSexo()));
-    listaEmpleado->AddLast(empleado.getTelefonoCelular());
-    listaEmpleado->AddLast(empleado.getTelefonoFijo());
-    listaEmpleado->AddLast(empleado.getEmail());
-    listaEmpleado->AddLast(empleado.getFechaNacimiento());
-    listaEmpleado->AddLast(empleado.getCiudadNacimiento());
-    listaEmpleado->AddLast(empleado.getPaisNacimiento());
-    listaEmpleado->AddLast(empleado.getPaisResidencia());
-    listaEmpleado->AddLast(empleado.getCiudadResidencia());
-    listaEmpleado->AddLast(empleado.getDireccion());
-    listaEmpleado->AddLast(empleado.getBarrio());
-    listaEmpleado->AddLast(empleado.getActividadLaboral());
-    listaEmpleado->AddLast(tieneHijosToString(empleado.getTieneHijos()));
-    listaEmpleado->AddLast(convertirAString(empleado.getNumHijos()));
-    listaEmpleado->AddLast(empleado.getNombreSucursal());
-    listaEmpleado->AddLast(convertirAString(empleado.getEdad()));
+    DoubleLinkedList<std::string> listaEmpleado;
+    listaEmpleado.AddLast(convertirAString(empleado->getId()));
+    listaEmpleado.AddLast(empleado->getNombre());
+    listaEmpleado.AddLast(empleado->getApellido());
+    listaEmpleado.AddLast(empleado->getTipoIdentificacion());
+    listaEmpleado.AddLast(empleado->getNumIdentificacion());
+    listaEmpleado.AddLast(sexoToString(empleado->getSexo()));
+    listaEmpleado.AddLast(empleado->getTelefonoCelular());
+    listaEmpleado.AddLast(empleado->getTelefonoFijo());
+    listaEmpleado.AddLast(empleado->getEmail());
+    listaEmpleado.AddLast(empleado->getFechaNacimiento());
+    listaEmpleado.AddLast(empleado->getCiudadNacimiento());
+    listaEmpleado.AddLast(empleado->getPaisNacimiento());
+    listaEmpleado.AddLast(empleado->getPaisResidencia());
+    listaEmpleado.AddLast(empleado->getCiudadResidencia());
+    listaEmpleado.AddLast(empleado->getDireccion());
+    listaEmpleado.AddLast(empleado->getBarrio());
+    listaEmpleado.AddLast(empleado->getActividadLaboral());
+    listaEmpleado.AddLast(tieneHijosToString(empleado->getTieneHijos()));
+    listaEmpleado.AddLast(convertirAString(empleado->getNumHijos()));
+    listaEmpleado.AddLast(empleado->getNombreSucursal());
+    listaEmpleado.AddLast(convertirAString(empleado->getEdad()));
 
     return listaEmpleado;
 }

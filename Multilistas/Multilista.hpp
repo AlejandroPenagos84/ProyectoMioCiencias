@@ -14,6 +14,8 @@ public:
     virtual void Agregar(T &) = 0;
     virtual void Eliminar(std::string) = 0;
     virtual void Modificar(std::string, T *) = 0;
+    virtual T *getObjeto(std::string) = 0;
+    virtual int getSize() = 0;
 };
 
 template <class T>
