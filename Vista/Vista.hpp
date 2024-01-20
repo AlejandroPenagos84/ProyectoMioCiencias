@@ -25,8 +25,7 @@ public:
     int MenuAccion();
     void Titulo();
 
-    int MostrarMenuModificar(DoubleLinkedList<std::string> atributos);
-    std::string IngresarNuevoDato(std::string atributo, std::string antDato);
+    int MostrarMenuModificar(DoubleLinkedList<std::string> &atributos);
     std::string SolicitarInfo(std::string atributo, std::string accion);
     void Imprimir(std::string m);
 

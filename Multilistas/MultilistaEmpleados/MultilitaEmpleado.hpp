@@ -6,7 +6,6 @@
 #ifndef MULTILISTA_EMPLEADO_HPP
 #define MULTILISTA_EMPLEADO_HPP
 
-#include "../../Librerias/ListaDoble.hpp"
 #include "../../Librerias/Arbol.hpp"
 #include "../../Estructuras/Empleado.hpp"
 #include "../../Estructuras/Cabecera.hpp"
@@ -15,14 +14,11 @@
 #include <string>
 #include <iostream>
 
-using namespace ListaDoble;
 using namespace Arbol;
 
 class MultilistaEmpleado : public Multilista<Empleado>
 {
 private:
-    DoubleLinkedList<Empleado> empleados;
-
     // Árbol que guardará la dirección de los empleados para facilitar la búsqueda y organización.
     RBTree<std::string, Empleado *> *arbolEmpleados;
 
@@ -40,7 +36,7 @@ private:
 public:
     MultilistaEmpleado();
 
-    void Agregar(Empleado &empleado);
+    void Agregar(Empleado *empleado);
     void Eliminar(std::string nombreEmpleado);
     void Modificar(std::string nombreEmpleado, Empleado *empleado);
     Empleado *getObjeto(std::string nombreEmpleado);
@@ -58,8 +54,8 @@ public:
 
 private:
     // Metodos para agregar un empleado
-    void AgregarAArbol(Empleado &empleado);
-    void OrganizarDatos(Empleado &empleado);
+    void AgregarAArbol(Empleado *empleado);
+    void OrganizarDatos(Empleado *empleado);
 
     // Metodo para eliminar un empleado}
     void EliminarDelArbol(std::string nombreCompleto);

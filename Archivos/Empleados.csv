@@ -12,5 +12,4 @@ ID,Nombre,Apellido,Tipo Identificacion,Numero Identificacion,Sexo,Telefono Celul
 11,Eva,Anderson,Pasaporte,AB987654,f,555-987-6543,222-333-4444,eva.anderson@example.com,1980-02-18,London,UK,UK,London,303 High Street,Westminster,Analista de Datos,n,0,Sucursal XYZ,43
 12,Frank,Miller,DNI,34567890,m,123-456-7890,987-654-3210,frank.miller@example.com,1991-11-30,New York,USA,USA,New York,404 Maple Avenue,Brooklyn,Programador,s,3,Sucursal ABC,30
 13,Grace,Kim,Cédula,56789012,f,555-987-6543,222-333-4444,grace.kim@example.com,1984-09-22,London,UK,UK,London,505 Birch Street,Camden,Diseñadora Gráfica,s,2,Sucursal XYZ,39
-14,Hector,Garcia,DNI,45678901,m,123-456-7890,987-654-3210,hector.garcia@example.com,1993-07-14,Bogota,Colombia,Colombia,Bogota,606 Oak Avenue,Sunset Hills,Desarrollador de Software,n,0,Sucursal ABC,28
-15,Isabella,Chen,Cédula,78901234,f,555-987-6543,222-333-4444,isabella.chen@example.com,1986-03-05,London,UK,UK,London,707 Pine Street,Westminster,Ingeniera de Sistemas,s,1,Sucursal XYZ,36
+14,Carlos,Garcia,DNI,45678901,m,123-456-7890,987-654-3210,hector.garcia@example.com,1993-07-14,Bogota,Colombia,Colombia,Bogota,606 Oak Avenue,Sunset Hills,Desarrollador de Software,n,0,Sucursal ABC,28

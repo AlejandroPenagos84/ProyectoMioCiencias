@@ -9,6 +9,7 @@
                 "-g",
                 "${fileDirname}\\**.cpp",
                 "${fileDirname}\\Multilistas\\MultilistaEmpleados\\**.cpp",
+                "${fileDirname}\\Multilistas\\MultilistaHijos\\**.cpp",
                 "${fileDirname}\\Controlador\\**.cpp",
                 "${fileDirname}\\ControlDAO\\**.cpp",
                 "${fileDirname}\\Fabricas\\FabricaEmpleado\\**.cpp",

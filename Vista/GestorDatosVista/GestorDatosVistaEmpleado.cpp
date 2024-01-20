@@ -171,62 +171,7 @@ DoubleLinkedList<std::string> GestorDatosVistaEmpleado::SolicitarDatosParaAgrega
     }
 }
 
-void GestorDatosVistaEmpleado::SolicitarInformacionAlpha(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados)
-{
-    std::string atributo;
-    do
-    {
-        PRINT(mensajeAtributo);
-        std::getline(std::cin, atributo);
-        if (!EsStringAlfabeticoConEspacios(atributo))
-            std::cerr << mensajeErrorLetras << std::endl;
-        else
-            atributosEmpleados.AddLast(atributo);
-    } while (!EsStringAlfabeticoConEspacios(atributo));
-}
-
-bool GestorDatosVistaEmpleado::EsStringAlfabeticoConEspacios(const std::string &str)
-{
-    for (size_t i = 0; i < str.length(); ++i)
-    {
-        char c = str[i];
-        if (!std::isalpha(c) && !std::isspace(c))
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-void GestorDatosVistaEmpleado::SolicitarInformacionNum(std::string mensajeAtributo, DoubleLinkedList<std::string> &atributosEmpleados)
-{
-    std::string atributo;
-    do
-    {
-        PRINT(mensajeAtributo);
-        std::getline(std::cin, atributo);
-        if (!EsStringConNumeros(atributo))
-            std::cerr << mensajeErrorNumeros << std::endl;
-        else
-            atributosEmpleados.AddLast(atributo);
-
-    } while (!EsStringConNumeros(atributo));
-}
-
-bool GestorDatosVistaEmpleado::EsStringConNumeros(const std::string &str)
-{
-    for (size_t i = 0; i < str.length(); ++i)
-    {
-        char c = str[i];
-        if (!std::isalnum(c))
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-void GestorDatosVistaEmpleado::MostrarAtributos(DoubleLinkedList<std::string> atributos)
+void GestorDatosVistaEmpleado::MostrarAtributos(DoubleLinkedList<std::string> &atributos)
 {
     PRINTLN("Atributos del empleado");
     PRINTLN("1. Nombre: " + atributos.getData(2));
@@ -253,20 +198,22 @@ void GestorDatosVistaEmpleado::MostrarAtributos(DoubleLinkedList<std::string> at
     PRINTLN("");
 }
 
-int GestorDatosVistaEmpleado::ElegirAtributo(DoubleLinkedList<std::string> atributos)
+int GestorDatosVistaEmpleado::ElegirAtributo(DoubleLinkedList<std::string> &atributos)
 {
     int op;
     PRINTLN("Si quieres salir ingresa 0\n");
     MostrarAtributos(atributos);
-    PRINT("Ingresa el número del atributos que quieres modificar: ");
+    PRINT("Ingresa el número del atributo que quieres modificar: ");
     std::cin >> op;
+    if (op != 0)
+        ModificarAtributos(atributos, op, IngresarNuevoDato(atributos.getData(op + 1)));
     return op;
 }
 
-template <class T>
-std::string GestorDatosVistaEmpleado::convertirAString(const T &valor)
+void GestorDatosVistaEmpleado::ModificarAtributos(DoubleLinkedList<std::string> &atributos, int pos, std::string nuevoDato)
 {
-    std::ostringstream stream;
-    stream << valor;
-    return stream.str();
+    atributos.SetDataPos(pos + 1, nuevoDato);
+
+    if (pos == 9)
+        atributos.SetDataPos(21, convertirAString(calcularEdad(obtenerFechaDesdeString(atributos.getData(10)))));
 }

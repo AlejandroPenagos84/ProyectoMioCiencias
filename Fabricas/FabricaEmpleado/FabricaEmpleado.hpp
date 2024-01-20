@@ -8,8 +8,8 @@
 class FabricaEmpleado : public FabricaAbtracta<Empleado>
 {
 public:
-    Empleado crearObjeto(DoubleLinkedList<std::string> listaAtributos);
-    RBTree<std::string, Empleado> *crearArbol(DoubleLinkedList<DoubleLinkedList<std::string>> listaEmpleados);
+    Empleado *crearObjeto(DoubleLinkedList<std::string> listaAtributos);
+    RBTree<std::string, Empleado *> *crearArbol(DoubleLinkedList<DoubleLinkedList<std::string>> listaEmpleados);
     DoubleLinkedList<std::string> crearListaDeAtributos(Empleado *empleado);
 
 private:

@@ -1,7 +1,8 @@
 #ifndef EMPLEADO_HPP
 #define EMPLEADO_HPP
 #include <iostream>
-
+#include "../Multilistas/Multilista.hpp"
+#include "../Multilistas/MultilistaHijos/MultilistaHijo.hpp"
 class Empleado
 {
 
@@ -106,9 +107,10 @@ private:
     std::string actividadLaboral;
     bool tieneHijos;
     int numHijos;
-    // Lista hijos
     std::string nombreSucursal;
     int edad;
+
+    Multilista<Hijo> *multilistaHijos = new MultilistaHijo;
 
     // Punteros Especificos
     // Sexo

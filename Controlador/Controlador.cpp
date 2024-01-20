@@ -16,7 +16,7 @@ void Controlador::LlenarMultilistas()
 {
     // Creo una lista de empleados, con ella creo una cola con los nombres en orden alfabetico para agregarlo en la multilista
     DoubleLinkedList<DoubleLinkedList<std::string>> listaEmpleados = controlDao.LeerDAO(ObtenerRutaRelativa("\\Archivos\\Empleados.csv"));
-    Queue<Nodo<std::string, Empleado> *> colaEmpleados = fabricaEmpleados->crearArbol(listaEmpleados)->inorden();
+    Queue<Nodo<std::string, Empleado *> *> colaEmpleados = fabricaEmpleados->crearArbol(listaEmpleados)->inorden();
 
     while (!colaEmpleados.IsEmpty())
         multilistaEmpleados->Agregar(colaEmpleados.Dequeue('I')->Valor);
@@ -30,12 +30,10 @@ void Controlador::AgregarObjeto(
     FabricaAbtracta<T> *fabricaObjeto)
 {
     // Obtener el ultimo ID del archivo especificado
-
     atributos.AddFirst(controlDao.ObtenerUltimoID(archivo));
+    T *nuevoObjeto = fabricaObjeto->crearObjeto(atributos);
 
     controlDao.Agregar(archivo, atributos); ///< Agrego el objeto al archivo
-
-    T nuevoObjeto = fabricaObjeto->crearObjeto(atributos);
     multilista->Agregar(nuevoObjeto);
 }
 
@@ -50,7 +48,6 @@ void Controlador::EliminarObjeto(
 
     if (ComprobarExistenciaDeObjeto(multilista, nombre))
     {
-
         DoubleLinkedList<std::string> atributos = fabricaObjeto->crearListaDeAtributos(multilista->getObjeto(nombre));
         controlDao.Eliminar(archivo, atributos.getData(1));
         multilista->Eliminar(nombre);
@@ -73,13 +70,11 @@ void Controlador::ModificarObjeto(
     {
         T *objetoOriginal = multilista->getObjeto(nombre);
         DoubleLinkedList<std::string> atributosObjetoOriginal = fabricaObjeto->crearListaDeAtributos(objetoOriginal);
-
         DoubleLinkedList<std::string> atributosNuevos = ElegirAtributoModificar(atributosObjetoOriginal, nombresAtributos);
+        T *objetoModificado = fabricaObjeto->crearObjeto(atributosNuevos);
 
         controlDao.Modificar(archivo, atributosNuevos.getData(1), atributosNuevos);
-        T objetoModificado = fabricaObjeto->crearObjeto(atributosNuevos);
-
-        multilista->Modificar(nombre, &objetoModificado);
+        multilista->Modificar(nombre, objetoModificado);
     }
     else
         vista->Imprimir("No existe el " + objeto + " especificado");
@@ -94,9 +89,7 @@ DoubleLinkedList<std::string> Controlador::ElegirAtributoModificar(DoubleLinkedL
         if (op == 0)
             break;
 
-        std::string nuevoDato = vista->IngresarNuevoDato(nombresAtributos.getData(op), atributos.getData(op + 1));
-
-        atributos.SetDataPos(op + 1, nuevoDato);
+        std::cout << "Atributo Cambiado: " << atributos.getData(op + 1);
     }
     return atributos;
 }

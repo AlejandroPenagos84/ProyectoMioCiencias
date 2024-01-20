@@ -15,52 +15,51 @@ MultilistaEmpleado::MultilistaEmpleado()
     size = 0;
 }
 
-void MultilistaEmpleado::Agregar(Empleado &empleado)
+void MultilistaEmpleado::Agregar(Empleado *empleado)
 {
     OrganizarDatos(empleado);
     AgregarAArbol(empleado);
-    empleados.AddLast(empleado);
     size++;
 }
 
-void MultilistaEmpleado::AgregarAArbol(Empleado &empleado)
+void MultilistaEmpleado::AgregarAArbol(Empleado *empleado)
 {
-    std::string nombreCompleto = empleado.getNombre() + " " + empleado.getApellido();
-    arbolEmpleados->Insert(arbolEmpleados, arbolEmpleados->createNodo(nombreCompleto, &empleado));
+    std::string nombreCompleto = empleado->getNombre() + " " + empleado->getApellido();
+    arbolEmpleados->Insert(arbolEmpleados, arbolEmpleados->createNodo(nombreCompleto, empleado));
 }
 
-void MultilistaEmpleado::OrganizarDatos(Empleado &empleado)
+void MultilistaEmpleado::OrganizarDatos(Empleado *empleado)
 {
     manejoPunteros->OrganizarPunterosAlAgregar(
-        cabeceraCiudadNacimiento, &empleado,
+        cabeceraCiudadNacimiento, empleado,
         getterCiudadNacimiento(), setterCiudadNacimiento());
 
     manejoPunteros->OrganizarPunterosAlAgregar(
-        cabeceraPaisNacimiento, &empleado,
+        cabeceraPaisNacimiento, empleado,
         getterPaisNacimiento(), setterPaisNacimiento());
 
     manejoPunteros->OrganizarPunterosAlAgregar(
-        cabeceraPaisResidencia, &empleado,
+        cabeceraPaisResidencia, empleado,
         getterPaisResidencia(), setterPaisResidencia());
 
     manejoPunteros->OrganizarPunterosAlAgregar(
-        cabeceraCiudadResidencia, &empleado,
+        cabeceraCiudadResidencia, empleado,
         getterCiudadResidencia(), setterCiudadResidencia());
 
     manejoPunteros->OrganizarPunterosAlAgregar(
-        cabeceraActividadLaboral, &empleado,
+        cabeceraActividadLaboral, empleado,
         getterActividadLaboral(), setterActividadLaboral());
 
     manejoPunteros->OrganizarPunterosAlAgregar(
-        cabeceraEdad, &empleado,
+        cabeceraEdad, empleado,
         getterEdad(), setterEdad());
 
     manejoPunteros->OrganizarPunterosAlAgregar(
-        cabeceraNumeroHijos, &empleado,
+        cabeceraNumeroHijos, empleado,
         getterNumeroHijos(), setterNumeroHijos());
 
     manejoPunteros->OrganizarPunterosAlAgregar(
-        cabeceraSexo, &empleado,
+        cabeceraSexo, empleado,
         getterSexo(), setterSexo());
 }
 
@@ -72,7 +71,9 @@ void MultilistaEmpleado::Eliminar(std::string nombreEmpleado)
     {
         ManejarCabeceras(empleadoAEliminar, nombreEmpleado);
         arbolEmpleados->Delete(arbolEmpleados, arbolEmpleados->findNodo(nombreEmpleado));
+        size--;
     }
+    empleadoAEliminar = NULL;
 }
 
 // Metodo que reune todo las cabecera y atributos con punteros para poder eiminar un empleado
@@ -115,79 +116,12 @@ void MultilistaEmpleado::EliminarDelArbol(std::string nombreCompleto)
 {
     Nodo<std::string, Empleado *> *nodoAEliminar = arbolEmpleados->findNodo(nombreCompleto);
     arbolEmpleados->Delete(arbolEmpleados, nodoAEliminar);
-    size--;
 }
 
 void MultilistaEmpleado::Modificar(std::string nombreEmpleado, Empleado *empleado)
 {
-    Empleado *&empleadoEnElArbol = arbolEmpleados->findNodo(nombreEmpleado)->Valor;
-
-    // Modificar Atributos que tienen Punteros
-    modificarAtributos->ModificarAtributoConPunteros(
-        cabeceraCiudadNacimiento, empleadoEnElArbol,
-        empleado, getterCiudadNacimiento(), setterCiudadNacimiento());
-
-    modificarAtributos->ModificarAtributoConPunteros(
-        cabeceraPaisNacimiento, empleadoEnElArbol,
-        empleado, getterPaisNacimiento(), setterPaisNacimiento());
-
-    modificarAtributos->ModificarAtributoConPunteros(
-        cabeceraPaisResidencia, empleadoEnElArbol,
-        empleado, getterPaisResidencia(), setterPaisResidencia());
-
-    modificarAtributos->ModificarAtributoConPunteros(
-        cabeceraCiudadResidencia, empleadoEnElArbol,
-        empleado, getterCiudadResidencia(), setterCiudadResidencia());
-
-    modificarAtributos->ModificarAtributoConPunteros(
-        cabeceraActividadLaboral, empleadoEnElArbol,
-        empleado, getterActividadLaboral(), setterActividadLaboral());
-
-    modificarAtributos->ModificarAtributoConPunteros(
-        cabeceraEdad, empleadoEnElArbol,
-        empleado, getterEdad(), setterEdad());
-
-    modificarAtributos->ModificarAtributoConPunteros(
-        cabeceraNumeroHijos, empleadoEnElArbol,
-        empleado, getterNumeroHijos(), setterNumeroHijos());
-
-    modificarAtributos->ModificarAtributoConPunteros(
-        cabeceraSexo, empleadoEnElArbol,
-        empleado, getterSexo(), setterSexo());
-
-    // Modificar Atributos que no tienen punteros
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getNombre, &Empleado::setNombre);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getApellido, &Empleado::setApellido);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getTipoIdentificacion, &Empleado::setTipoIdentificacion);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getNumIdentificacion, &Empleado::setNumIdentificacion);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getTelefonoCelular, &Empleado::setTelefonoCelular);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getTelefonoFijo, &Empleado::setTelefonoFijo);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getEmail, &Empleado::setEmail);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getFechaNacimiento, &Empleado::setFechaNacimiento);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getDireccion, &Empleado::setDireccion);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getBarrio, &Empleado::setBarrio);
-
-    modificarAtributos->ModificarAtributoSinPunteros(
-        empleadoEnElArbol, empleado, &Empleado::getTieneHijos, &Empleado::setTieneHijos);
+    Eliminar(nombreEmpleado);
+    Agregar(empleado);
 }
 
 Empleado *MultilistaEmpleado::getObjeto(std::string nombreEmpleado)

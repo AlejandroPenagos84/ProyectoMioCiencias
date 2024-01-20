@@ -71,23 +71,11 @@ void Vista::Titulo()
     std::cout << " |____/|_|___/\\__\\___|_| |_| |_|\\__,_|  \\__,_|\\___| |____/ \\__,_|\\___|\\__,_|_|  |___/\\__,_|_|\\___||___/" << std::endl;
 }
 
-int Vista::MostrarMenuModificar(DoubleLinkedList<std::string> atributos)
+int Vista::MostrarMenuModificar(DoubleLinkedList<std::string> &atributos)
 {
     int op = 0;
     if (atributos.Size() == 21)
         op = gestorDatosEmpleado->ElegirAtributo(atributos);
 
     return op;
-}
-
-std::string Vista::IngresarNuevoDato(std::string atributo, std::string antDato)
-{
-    std::cin.ignore();
-    std::string nuevoDato;
-    PRINTLN("Atributo: " + atributo);
-    PRINTLN("Anterior Dato: " + antDato);
-    PRINT("Ingresa el nuevo dato: ");
-    std::getline(std::cin, nuevoDato);
-    PRINTLN("");
-    return nuevoDato;
 }

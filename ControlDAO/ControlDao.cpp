@@ -2,38 +2,38 @@
 
 DoubleLinkedList<DoubleLinkedList<std::string>> ControlDao::LeerDAO(const std::string &filename)
 {
-    std::fstream file;
-
-    file.open(filename.c_str(), std::ios::in);
+    std::fstream file(filename.c_str(), std::ios::in);
 
     if (!file.is_open())
         std::cerr << "Error al abrir el archivo." << std::endl;
 
-    std::string lineaObjeto;
-
     // Leer la primera línea y descartarla
+    std::string lineaObjeto;
     std::getline(file, lineaObjeto);
 
-    DoubleLinkedList<DoubleLinkedList<std::string>> Objetos;
-
     // Leer el archivo linea por linea
+    DoubleLinkedList<DoubleLinkedList<std::string>> objetos;
+    CrearListaDeObjetos(file, objetos);
+
+    file.close();
+
+    return objetos;
+}
+
+void ControlDao::CrearListaDeObjetos(std::fstream &file, DoubleLinkedList<DoubleLinkedList<std::string>> &objetos)
+{
+    std::string lineaObjeto;
     while (std::getline(file, lineaObjeto))
     {
         std::stringstream ss(lineaObjeto);
-
         DoubleLinkedList<std::string> columnas; ///< Creo una lista que guardará cada dato de cada Objeto
         std::string columna;
 
         while (std::getline(ss, columna, ','))
             columnas.AddLast(columna);
 
-        Objetos.AddLast(columnas);
+        objetos.AddLast(columnas);
     }
-
-    file.close();
-
-    ObtenerUltimoID(filename);
-    return Objetos;
 }
 
 void ControlDao::Agregar(const std::string &filename, DoubleLinkedList<std::string> objeto)
@@ -42,29 +42,26 @@ void ControlDao::Agregar(const std::string &filename, DoubleLinkedList<std::stri
     file.open(filename.c_str(), std::ios::app);
 
     if (!file.is_open())
-        std::cerr << "Error al abrir el archivo." << std::endl;
+        throw std::runtime_error("Error al abrir el archivo.");
 
+    file << std::endl;
+    file << ConfigurarObjetoAgregado(objeto);
+    file.close();
+}
+
+std::string ControlDao::ConfigurarObjetoAgregado(DoubleLinkedList<std::string> objeto)
+{
     std::stringstream ss;
 
     for (int i = 1; i <= objeto.Size(); i++)
     {
         if (i == objeto.Size())
-        {
             ss << objeto.getData(i);
-            std::cout << objeto.getData(i) << std::endl;
-        }
-
         else
-        {
             ss << objeto.getData(i) << ',';
-            std::cout << objeto.getData(i) << std::endl;
-        }
     }
 
-    file << std::endl;
-    file << ss.str();
-
-    file.close();
+    return ss.str();
 }
 
 void ControlDao::Eliminar(const std::string &filename, std::string idAEliminar)
@@ -75,7 +72,6 @@ void ControlDao::Eliminar(const std::string &filename, std::string idAEliminar)
         std::cerr << "Error al abrir el archivo." << std::endl;
 
     DoubleLinkedList<std::string> *objetosNoEliminados = new DoubleLinkedList<std::string>();
-
     std::string lineaObjeto;
 
     std::getline(file, lineaObjeto);
@@ -83,37 +79,15 @@ void ControlDao::Eliminar(const std::string &filename, std::string idAEliminar)
 
     while (std::getline(file, lineaObjeto))
     {
-        std::stringstream ss(lineaObjeto);
-
-        std::string id;
-        std::getline(ss, id, ',');
-
-        if (id != idAEliminar)
+        if (CompararId(idAEliminar, lineaObjeto))
             objetosNoEliminados->AddLast(lineaObjeto);
     }
 
     file.clear();
     file.seekp(0);
-
     file.close(); // Close the file
 
-    file.open(filename.c_str(), std::ios::out | std::ios::trunc); // Reopen the file in truncation mode
-
-    if (!file.is_open())
-    {
-        std::cerr << "Error al abrir el archivo para escribir." << std::endl;
-        // Handle the error accordingly
-    }
-
-    for (int i = 1; i <= objetosNoEliminados->Size(); i++)
-    {
-        file << objetosNoEliminados->getData(i);
-        if (i < objetosNoEliminados->Size())
-            file << '\n';
-    }
-
-    file.close();
-
+    EscribirElementosEnArchivo(filename, objetosNoEliminados);
     delete objetosNoEliminados;
 }
 
@@ -136,50 +110,59 @@ void ControlDao::Modificar(
 
     while (std::getline(file, lineaObjeto))
     {
-        std::stringstream ss(lineaObjeto);
-
-        std::string id;
-        std::getline(ss, id, ',');
-
-        if (id != idAModificar)
+        if (CompararId(idAModificar, lineaObjeto))
             objetosDelArchivo->AddLast(lineaObjeto);
         else
-        {
-            std::stringstream objetoModificadoStream;
-            for (int i = 1; i <= objetoModificado.Size(); i++)
-            {
-
-                if (i == objetoModificado.Size())
-                    objetoModificadoStream << objetoModificado.getData(i);
-                else
-                    objetoModificadoStream << objetoModificado.getData(i) << ',';
-            }
-
-            objetosDelArchivo->AddLast(objetoModificadoStream.str());
-        }
+            objetosDelArchivo->AddLast(ConfigurarObjetoModificado(objetoModificado));
     }
 
     file.clear();
     file.seekp(0);
 
-    file.close(); // Close the file
+    EscribirElementosEnArchivo(filename, objetosDelArchivo);
+    delete objetosDelArchivo;
+}
 
-    file.open(filename.c_str(), std::ios::out | std::ios::trunc); // Reopen the file in truncation mode
+void ControlDao::EscribirElementosEnArchivo(const std::string &filename, DoubleLinkedList<std::string> *objetos)
+{
+    std::fstream file(filename.c_str(), std::ios::out | std::ios::trunc); // Reopen the file in truncation mode
 
     if (!file.is_open())
-    {
         std::cerr << "Error al abrir el archivo para escribir." << std::endl;
-        // Handle the error accordingly
-    }
 
-    for (int i = 1; i <= objetosDelArchivo->Size(); i++)
+    for (int i = 1; i <= objetos->Size(); i++)
     {
-        file << objetosDelArchivo->getData(i);
-        if (i < objetosDelArchivo->Size())
+        file << objetos->getData(i);
+        if (i < objetos->Size())
             file << '\n';
     }
-    // std::cout << "ELIMINAR DAO SI SE EJECUTA" << std::endl;
+
     file.close();
+}
+
+std::string ControlDao::ConfigurarObjetoModificado(DoubleLinkedList<std::string> objetoModificado)
+{
+    std::stringstream objetoModificadoStream;
+    for (int i = 1; i <= objetoModificado.Size(); i++)
+    {
+
+        if (i == objetoModificado.Size())
+            objetoModificadoStream << objetoModificado.getData(i);
+        else
+            objetoModificadoStream << objetoModificado.getData(i) << ',';
+    }
+
+    return objetoModificadoStream.str();
+}
+
+bool ControlDao::CompararId(std::string idABuscar, std::string lineaObjeto)
+{
+    std::stringstream ss(lineaObjeto);
+
+    std::string id;
+    std::getline(ss, id, ',');
+
+    return id != idABuscar;
 }
 
 std::string ControlDao::ObtenerUltimoID(const std::string &filename)
